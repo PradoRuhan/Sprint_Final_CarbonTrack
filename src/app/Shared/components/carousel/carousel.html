@@ -1,1 +1,45 @@
-<p>carousel works!</p>
+<div id="heroCarousel" class="carousel slide" data-bs-ride="carousel" data-bs-interval="5000">
+
+  <!-- Indicadores -->
+  <div class="carousel-indicators">
+    <button
+      *ngFor="let slide of slides; let i = index"
+      type="button"
+      data-bs-target="#heroCarousel"
+      [attr.data-bs-slide-to]="i"
+      [class.active]="i === 0"
+      [attr.aria-current]="i === 0 ? 'true' : null"
+      [attr.aria-label]="'Slide ' + (i + 1)"
+    ></button>
+  </div>
+
+  <!-- Slides -->
+  <div class="carousel-inner">
+    <div
+      *ngFor="let slide of slides; let i = index"
+      class="carousel-item"
+      [class.active]="i === 0"
+    >
+      <img [src]="slide.imageUrl" class="d-block w-100 carousel-img" [alt]="slide.title" />
+      <div class="carousel-caption">
+        <h2 class="fw-bold">{{ slide.title }}</h2>
+        <p class="d-none d-md-block">{{ slide.description }}</p>
+        <a [href]="slide.anchor" class="btn btn-success rounded-pill px-4 mt-2">
+          Saiba mais
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Botão anterior -->
+  <button class="carousel-control-prev" type="button" data-bs-target="#heroCarousel" data-bs-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Anterior</span>
+  </button>
+
+  <!-- Botão próximo -->
+  <button class="carousel-control-next" type="button" data-bs-target="#heroCarousel" data-bs-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Próximo</span>
+  </button>
+</div>

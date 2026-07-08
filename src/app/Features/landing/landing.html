@@ -1,1 +1,99 @@
-<p>landing works!</p>
+<!-- HERO -->
+<section class="hero-section text-white text-center d-flex align-items-center justify-content-center">
+  <div class="container py-5">
+    <h1 class="display-4 fw-bold mb-3">
+      Transformando impacto ambiental em valor para o futuro.
+    </h1>
+    <p class="lead mb-4">
+      Conectamos produtores, cooperativas e empresas ao mercado de carbono através
+      de tecnologia, inteligência ambiental e projetos coletivos.
+    </p>
+    <div class="d-flex gap-3 justify-content-center flex-wrap">
+      <a routerLink="/login" class="btn btn-success btn-lg rounded-pill px-4">
+        Entrar na Plataforma
+      </a>
+      <a href="#como-funciona" class="btn btn-outline-light btn-lg rounded-pill px-4">
+        Conheça o Projeto
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- CARROSSEL -->
+<section id="mercado-carbono">
+  <app-carousel></app-carousel>
+</section>
+
+<!-- COMO FUNCIONA -->
+<section id="como-funciona" class="py-5 bg-light">
+  <div class="container">
+    <h2 class="text-center fw-bold mb-2">Como o CarbonTrack Funciona</h2>
+    <p class="text-center text-secondary mb-5">
+      Uma jornada simplificada, do cadastro à comercialização dos créditos de carbono.
+    </p>
+
+    <div class="row g-4">
+      <div class="col-md-6 col-lg-3" *ngFor="let step of steps">
+        <div class="card h-100 border-0 shadow-sm text-center p-3 step-card">
+          <div class="fs-1 mb-2">{{ step.icon }}</div>
+          <span class="badge bg-success rounded-pill mb-2 align-self-center">
+            Etapa {{ step.order }}
+          </span>
+          <h5 class="fw-bold">{{ step.title }}</h5>
+          <p class="text-secondary small mb-0">{{ step.description }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ESG -->
+<section id="esg" class="py-5">
+  <div class="container">
+    <h2 class="text-center fw-bold mb-2">Compromisso ESG</h2>
+    <p class="text-center text-secondary mb-5">
+      O CarbonTrack integra práticas ambientais, sociais e de governança em cada projeto.
+    </p>
+
+    <div class="row g-4">
+      <div class="col-md-4" *ngFor="let card of esgCards">
+        <div class="card h-100 border-0 shadow-sm p-4 esg-card">
+          <div class="d-flex align-items-center gap-3 mb-3">
+            <span class="esg-letter">{{ card.letter }}</span>
+            <span class="fs-2">{{ card.icon }}</span>
+          </div>
+          <h5 class="fw-bold">{{ card.title }}</h5>
+          <p class="text-secondary mb-0">{{ card.description }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DEPOIMENTOS -->
+<section id="depoimentos" class="py-5 bg-light">
+  <div class="container">
+    <h2 class="text-center fw-bold mb-5">Quem já usa o CarbonTrack</h2>
+
+    <div class="row g-4">
+      <div class="col-md-4" *ngFor="let t of testimonials">
+        <div class="card h-100 border-0 shadow-sm p-4">
+          <p class="fst-italic text-secondary">"{{ t.quote }}"</p>
+          <h6 class="fw-bold mb-0 mt-3">{{ t.name }}</h6>
+          <small class="text-success">{{ t.role }}</small>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA FINAL -->
+<section id="contato" class="py-5 text-center cta-section text-white">
+  <div class="container">
+    <h2 class="fw-bold mb-3">Pronto para transformar seu impacto ambiental em valor?</h2>
+    <p class="lead mb-4">Cadastre-se e faça parte da rede CarbonTrack.</p>
+    <a routerLink="/register" class="btn btn-light btn-lg rounded-pill px-4">
+      Criar Conta Gratuita
+    </a>
+  </div>
+</section>
