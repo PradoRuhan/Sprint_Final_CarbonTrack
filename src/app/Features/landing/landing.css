@@ -19,15 +19,99 @@
   background: linear-gradient(135deg, #14532d, #0b3d24);
 }
 
-.simulator-card {
+.simulator-badge {
+  display: inline-block;
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  color: #fff;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  padding: 0.4rem 1rem;
+  border-radius: 20px;
+}
+
+.simulator-form-card {
   border-radius: 24px;
-  overflow: hidden;
 }
 
-.result-panel {
-  background: linear-gradient(160deg, #0f766e, #14532d);
+.simulator-icon {
+  width: 48px;
+  height: 48px;
+  background: #e8f5e9;
+  color: #14532d;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.3rem;
 }
 
+.simulator-input {
+  border-radius: 12px !important;
+  border: 1px solid #e2e8e4 !important;
+  background: #fafbfa !important;
+}
+
+.simulator-input:focus {
+  border-color: #14532d !important;
+  box-shadow: 0 0 0 3px rgba(20, 83, 45, 0.1) !important;
+}
+
+.select-with-arrow {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+}
+
+.select-arrow-icon {
+  position: absolute;
+  right: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;
+  color: #666;
+}
+
+.input-icon-group {
+  position: relative;
+}
+
+.result-card {
+  border-radius: 18px;
+  padding: 1.5rem;
+  color: #fff;
+}
+
+.result-card small {
+  opacity: 0.85;
+  display: block;
+  margin-bottom: 0.4rem;
+}
+
+.result-card .unit {
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+.result-card-green {
+  background: linear-gradient(135deg, #14532d, #0f7a45);
+}
+
+.result-card-orange {
+  background: linear-gradient(135deg, #ea580c, #f59e0b);
+}
+
+.projection-chart {
+  width: 100%;
+  height: 200px;
+  margin-top: 0.5rem;
+}
+
+.cta-bar {
+  background: linear-gradient(135deg, #14532d, #0b3d24);
+  border-radius: 18px;
+}
 .esg-card {
   border-radius: 16px;
   border-left: 4px solid #198754;
@@ -48,4 +132,11 @@
 
 .cta-section {
   background: linear-gradient(135deg, #198754, #0f5132);
+}
+
+.empty-result-state {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px dashed rgba(255, 255, 255, 0.25);
+  border-radius: 20px;
+  min-height: 320px;
 }

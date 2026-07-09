@@ -50,74 +50,133 @@
 <!-- SIMULADOR -->
 <section id="simulador" class="py-5 simulator-section">
   <div class="container">
-    <h2 class="text-center fw-bold mb-2 text-white">Simule seu Potencial de Carbono</h2>
-    <p class="text-center text-white-50 mb-5">
-      Informe a área da sua propriedade e o bioma para ter uma estimativa educacional
-      do seu potencial no mercado de carbono.
-    </p>
+    <div class="text-center mb-5">
+      <span class="simulator-badge">🌱 Simular Potencial</span>
+      <h2 class="fw-bold display-6 mt-3 mb-2 text-white">Descubra o valor da sua terra</h2>
+      <p class="text-white-50 mb-0">
+        Estime em segundos o potencial de captura de carbono e a receita anual da sua propriedade ou cooperativa.
+      </p>
+    </div>
 
-    <div class="row justify-content-center">
-      <div class="col-lg-9">
-        <div class="card simulator-card border-0 shadow-lg">
-          <div class="row g-0">
+    <div class="row g-4">
+      <!-- Formulário (coluna estreita) -->
+      <div class="col-lg-4">
+        <div class="card simulator-form-card border-0 shadow-lg h-100">
+          <div class="card-body p-4">
+            <div class="d-flex align-items-center gap-3 mb-4">
+              <div class="simulator-icon"><i class="bi bi-calculator-fill"></i></div>
+              <div>
+                <small class="text-uppercase text-secondary fw-bold">Simulador</small>
+                <h6 class="fw-bold mb-0">Preencha os dados</h6>
+              </div>
+            </div>
 
-            <!-- Formulário -->
-            <div class="col-md-6 p-4 p-md-5">
-              <form [formGroup]="simulatorForm">
-                <label class="form-label fw-bold">Área elegível (hectares)</label>
-                <input
-                  type="number"
-                  class="form-control form-control-lg mb-2"
-                  formControlName="areaHectares"
-                  min="1"
-                  max="100000"
-                />
-                <input
-                  type="range"
-                  class="form-range mb-4"
-                  min="1"
-                  max="1000"
-                  formControlName="areaHectares"
-                />
+            <form [formGroup]="simulatorForm" (ngSubmit)="simulate()">
+              <label class="form-label fw-bold small text-uppercase">Área Elegível (hectares)</label>
+              <input
+                type="number"
+                class="form-control form-control-lg mb-4 simulator-input"
+                formControlName="areaHectares"
+                min="1"
+                max="100000"
+              />
 
-                <label class="form-label fw-bold">Bioma</label>
-                <select class="form-select form-select-lg mb-2" formControlName="biome">
+              <label class="form-label fw-bold small text-uppercase">Bioma / Região</label>
+              <div class="input-icon-group mb-4">
+                <select class="form-select form-select-lg simulator-input select-with-arrow" formControlName="biome">
                   <option *ngFor="let b of biomeFactors" [value]="b.name">{{ b.name }}</option>
                 </select>
+                <i class="bi bi-chevron-down select-arrow-icon"></i>
+              </div>
 
-                <p class="small text-secondary mt-3 mb-0">
-                  <i class="bi bi-info-circle"></i>
-                  Os valores são estimativas educacionais baseadas em médias ilustrativas
-                  por bioma e não representam garantia de certificação ou comercialização.
-                </p>
-              </form>
-            </div>
+              <button type="submit" class="btn btn-success btn-lg w-100 rounded-pill fw-bold">
+                Simular Potencial <i class="bi bi-arrow-right ms-1"></i>
+              </button>
 
-            <!-- Resultado -->
-            <div class="col-md-6 result-panel p-4 p-md-5 text-white d-flex flex-column justify-content-center">
-              <ng-container *ngIf="simulationResult() as result; else emptyResult">
-                <small class="text-uppercase text-white-50 fw-bold">Potencial estimado</small>
-                <h1 class="display-5 fw-bold mb-0">{{ result.tco2ePerYear | number }}</h1>
-                <p class="mb-4">toneladas de CO₂e por ano</p>
-
-                <small class="text-uppercase text-white-50 fw-bold">Valor estimado (mercado voluntário)</small>
-                <h2 class="fw-bold mb-0">
-                  {{ result.estimatedValueBRL | currency:'BRL':'symbol':'1.0-0' }}
-                </h2>
-                <small class="text-white-50">por ano, considerando preço médio ilustrativo por tonelada</small>
-
-                <a routerLink="/register" class="btn btn-light rounded-pill mt-4 fw-bold">
-                  Quero participar <i class="bi bi-arrow-right"></i>
-                </a>
-              </ng-container>
-
-              <ng-template #emptyResult>
-                <p class="mb-0">Informe uma área válida para ver a estimativa.</p>
-              </ng-template>
-            </div>
-
+              <p class="small text-secondary text-center mt-3 mb-0">
+                Estimativa indicativa baseada em fatores médios por bioma (tCO₂e/ha·ano) e preço médio de mercado.
+              </p>
+            </form>
           </div>
         </div>
+      </div>
+
+      <!-- Resultados (coluna larga) -->
+      <div class="col-lg-8">
+
+        <!-- Estado vazio -->
+        <div *ngIf="!hasSimulated()" class="empty-result-state h-100 d-flex flex-column align-items-center justify-content-center text-center p-5">
+          <i class="bi bi-bar-chart-line display-4 text-white-50 mb-3"></i>
+          <h5 class="text-white fw-bold mb-2">Sua estimativa aparece aqui</h5>
+          <p class="text-white-50 mb-0">
+            Preencha os dados ao lado e clique em "Simular Potencial" para visualizar o resultado.
+          </p>
+        </div>
+
+        <!-- Resultado -->
+        <div *ngIf="hasSimulated() && simulationResult() as result">
+          <div class="row g-3 mb-3">
+            <div class="col-md-6">
+              <div class="result-card result-card-green h-100">
+                <small class="text-uppercase fw-bold">Potencial de Captura / Ano</small>
+                <h2 class="fw-bold mb-0">
+                  {{ formatNumber(result.tco2ePerYear) }} <span class="unit">tCO₂e</span>
+                </h2>
+                <small>Bioma: {{ simulatorForm.value.biome }}</small>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="result-card result-card-orange h-100">
+                <small class="text-uppercase fw-bold">Receita Estimada / Anual</small>
+                <h2 class="fw-bold mb-0">{{ formatCurrency(result.estimatedValueBRL) }}</h2>
+                <small>Base: {{ formatCurrency(45) }}/tCO₂e</small>
+              </div>
+            </div>
+          </div>
+
+          <!-- Projeção 5 anos -->
+          <div class="card border-0 shadow-sm mb-3 p-4">
+            <div class="d-flex justify-content-between align-items-start mb-2">
+              <div>
+                <small class="text-uppercase text-secondary fw-bold">Projeção 5 anos</small>
+                <h6 class="fw-bold mb-0">Receita estimada (R$)</h6>
+              </div>
+              <i class="bi bi-graph-up-arrow text-success fs-4"></i>
+            </div>
+
+            <svg viewBox="0 0 100 100" preserveAspectRatio="none" class="projection-chart">
+              <defs>
+                <linearGradient id="projectionFade" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="#14532d" stop-opacity="0.35" />
+                  <stop offset="100%" stop-color="#14532d" stop-opacity="0" />
+                </linearGradient>
+              </defs>
+              <path [attr.d]="getProjectionAreaPath()" fill="url(#projectionFade)" />
+              <polyline [attr.points]="getProjectionLinePoints()" fill="none" stroke="#14532d" stroke-width="1.5" vector-effect="non-scaling-stroke" />
+            </svg>
+
+            <div class="d-flex justify-content-between mt-2">
+              <small class="text-secondary" *ngFor="let p of projection()">{{ p.year }}</small>
+            </div>
+          </div>
+
+          <!-- CTA -->
+          <div class="cta-bar d-flex flex-column flex-md-row justify-content-between align-items-center gap-3 p-4">
+            <div>
+              <h6 class="fw-bold text-white mb-1">Ficou interessado?</h6>
+              <small class="text-white-50">Cadastre-se e converta esse potencial em créditos reais.</small>
+            </div>
+            <div class="d-flex gap-2">
+              <button type="button" class="btn btn-outline-light rounded-pill" (click)="resetSimulation()">
+                Nova simulação
+              </button>
+              <a routerLink="/register" class="btn btn-light rounded-pill fw-bold">
+                Cadastre-se <i class="bi bi-arrow-right"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+
       </div>
     </div>
   </div>
