@@ -1,1 +1,233 @@
-<p>admin-dashboard works!</p>
+<div class="dashboard-layout">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div class="sidebar-brand">
+      <span class="brand-icon">🌱</span>
+      <div>
+        <div class="fw-bold">CarbonTrack</div>
+        <small class="text-uppercase text-secondary">Admin</small>
+      </div>
+    </div>
+
+    <nav class="sidebar-nav">
+      <button class="nav-item" [class.active]="activeMenu === 'executive'" (click)="setMenu('executive')">
+        <i class="bi bi-grid-fill"></i> Executive
+      </button>
+      <button class="nav-item" [class.active]="activeMenu === 'producers'" (click)="setMenu('producers')">
+        <i class="bi bi-people-fill"></i> Produtores
+      </button>
+      <button class="nav-item" [class.active]="activeMenu === 'analytics'" (click)="setMenu('analytics')">
+        <i class="bi bi-bar-chart-line-fill"></i> Analytics
+      </button>
+      <button class="nav-item" [class.active]="activeMenu === 'validation'" (click)="setMenu('validation')">
+        <i class="bi bi-shield-check"></i> Validação
+      </button>
+    </nav>
+
+    <div class="sidebar-footer">
+      <button class="nav-item" (click)="setMenu('settings')">
+        <i class="bi bi-gear-fill"></i> Configurações
+      </button>
+      <button class="nav-item text-danger" (click)="logout()">
+        <i class="bi bi-box-arrow-right"></i> Sair
+      </button>
+    </div>
+
+    <div class="support-card">
+      <p class="mb-1 small">Suporte</p>
+      <p class="fw-bold mb-2">Fale com um especialista</p>
+      <button class="btn btn-light btn-sm w-100 rounded-pill">Abrir chat</button>
+    </div>
+  </aside>
+
+  <!-- MAIN -->
+  <main class="dashboard-main">
+
+    <header class="dashboard-topbar">
+      <div>
+        <h4 class="fw-bold mb-0">Executive Dashboard</h4>
+        <small class="text-secondary">Visão consolidada da operação nacional</small>
+      </div>
+      <div class="d-flex align-items-center gap-3">
+        <div class="search-box">
+          <i class="bi bi-search"></i>
+          <input type="text" placeholder="Buscar..." />
+        </div>
+        <button class="icon-btn position-relative">
+          <i class="bi bi-bell"></i>
+          <span class="notif-dot"></span>
+        </button>
+        <div class="avatar-circle">{{ currentUser()?.name?.charAt(0) }}</div>
+      </div>
+    </header>
+
+    <section *ngIf="activeMenu === 'executive' && stats() as s">
+
+      <!-- STAT CARDS -->
+      <div class="row g-4 mb-4">
+        <div class="col-md-3">
+          <div class="card stat-card border-0 shadow-sm">
+            <div class="d-flex justify-content-between align-items-start">
+              <i class="bi bi-people-fill stat-icon"></i>
+              <span class="growth-badge" [class.negative]="s.producersGrowthPercent < 0">
+                <i class="bi" [ngClass]="s.producersGrowthPercent >= 0 ? 'bi-arrow-up-right' : 'bi-arrow-down-right'"></i>
+                {{ s.producersGrowthPercent }}%
+              </span>
+            </div>
+            <h2 class="fw-bold mt-3 mb-0">{{ s.totalProducers | number }}</h2>
+            <small class="text-secondary">Produtores</small>
+          </div>
+        </div>
+
+        <div class="col-md-3">
+          <div class="card stat-card border-0 shadow-sm">
+            <div class="d-flex justify-content-between align-items-start">
+              <i class="bi bi-building-fill stat-icon"></i>
+              <span class="growth-badge">
+                <i class="bi bi-arrow-up-right"></i> {{ s.cooperativesGrowthPercent }}%
+              </span>
+            </div>
+            <h2 class="fw-bold mt-3 mb-0">{{ s.totalCooperatives }}</h2>
+            <small class="text-secondary">Cooperativas</small>
+          </div>
+        </div>
+
+        <div class="col-md-3">
+          <div class="card stat-card border-0 shadow-sm">
+            <div class="d-flex justify-content-between align-items-start">
+              <i class="bi bi-file-earmark-text-fill stat-icon"></i>
+              <span class="growth-badge">
+                <i class="bi bi-arrow-up-right"></i> +{{ s.activeProjectsGrowth }}
+              </span>
+            </div>
+            <h2 class="fw-bold mt-3 mb-0">{{ s.activeProjects }}</h2>
+            <small class="text-secondary">Projetos ativos</small>
+          </div>
+        </div>
+
+        <div class="col-md-3">
+          <div class="card stat-card border-0 shadow-sm">
+            <div class="d-flex justify-content-between align-items-start">
+              <i class="bi bi-graph-up-arrow stat-icon"></i>
+              <span class="growth-badge negative">
+                <i class="bi bi-arrow-down-right"></i> {{ s.carbonVolumeGrowthPercent }}%
+              </span>
+            </div>
+            <h2 class="fw-bold mt-3 mb-0">{{ s.estimatedCarbonVolume }}</h2>
+            <small class="text-secondary">tCO₂e estimado</small>
+          </div>
+        </div>
+      </div>
+
+      <div class="row g-4 mb-4">
+        <!-- GRÁFICO -->
+        <div class="col-lg-8">
+          <div class="card border-0 shadow-sm p-4">
+            <div class="d-flex justify-content-between align-items-start mb-1">
+              <div>
+                <h6 class="fw-bold mb-0">Volume de carbono certificado</h6>
+                <small class="text-secondary">Últimos 12 meses · tCO₂e</small>
+              </div>
+              <div class="period-toggle">
+                <button [class.active]="selectedPeriod === '12m'" (click)="loadVolume('12m')">12m</button>
+                <button [class.active]="selectedPeriod === '6m'" (click)="loadVolume('6m')">6m</button>
+                <button [class.active]="selectedPeriod === '3m'" (click)="loadVolume('3m')">3m</button>
+              </div>
+            </div>
+
+            <svg viewBox="0 0 100 100" preserveAspectRatio="none" class="line-chart">
+              <defs>
+                <linearGradient id="chartFade" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="#14532d" stop-opacity="0.35" />
+                  <stop offset="100%" stop-color="#14532d" stop-opacity="0" />
+                </linearGradient>
+              </defs>
+              <path [attr.d]="getChartAreaPath()" fill="url(#chartFade)" />
+              <polyline [attr.points]="getChartPoints()" fill="none" stroke="#14532d" stroke-width="1.5" vector-effect="non-scaling-stroke" />
+            </svg>
+
+            <div class="d-flex justify-content-between mt-2">
+              <small class="text-secondary" *ngFor="let p of volumePoints()">{{ p.month }}</small>
+            </div>
+          </div>
+        </div>
+
+        <!-- BIOMAS -->
+        <div class="col-lg-4">
+          <div class="card border-0 shadow-sm p-4 h-100">
+            <h6 class="fw-bold mb-3">Distribuição por bioma</h6>
+            <div class="biome-row" *ngFor="let b of biomes()">
+              <div class="d-flex justify-content-between mb-1">
+                <span class="small">{{ b.name }}</span>
+                <span class="small fw-bold">{{ b.percent }}%</span>
+              </div>
+              <div class="progress" style="height: 6px;">
+                <div class="progress-bar" [ngClass]="b.colorClass" [style.width.%]="b.percent"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row g-4">
+        <!-- FILA DE VALIDAÇÃO -->
+        <div class="col-lg-8">
+          <div class="card border-0 shadow-sm p-4">
+            <div class="d-flex justify-content-between mb-3">
+              <h6 class="fw-bold mb-0">Fila de validação</h6>
+              <a href="javascript:void(0)" class="small text-success fw-bold">Ver todos <i class="bi bi-arrow-up-right"></i></a>
+            </div>
+            <table class="table validation-table">
+              <thead>
+                <tr>
+                  <th>Projeto</th>
+                  <th>Cooperativa</th>
+                  <th>Área</th>
+                  <th>Status</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let item of validationQueue()">
+                  <td class="fw-bold">{{ item.projectName }}</td>
+                  <td class="text-secondary">{{ item.cooperativeName }}</td>
+                  <td>{{ item.areaHectares | number }} ha</td>
+                  <td><span class="badge-status" [ngClass]="statusClass(item.status)">{{ statusLabel(item.status) }}</span></td>
+                  <td><a href="javascript:void(0)" class="text-success fw-bold small">Revisar</a></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- ESG -->
+        <div class="col-lg-4">
+          <div class="card border-0 shadow-sm p-4 h-100">
+            <h6 class="fw-bold mb-3">Indicadores ESG</h6>
+            <div class="biome-row" *ngFor="let esg of esgIndicators()">
+              <div class="d-flex justify-content-between mb-1">
+                <span class="small">{{ esg.label }}</span>
+                <span class="small fw-bold">{{ esg.score }}</span>
+              </div>
+              <div class="progress" style="height: 6px;">
+                <div class="progress-bar" [ngClass]="esg.colorClass" [style.width.%]="esg.score"></div>
+              </div>
+            </div>
+            <hr />
+            <div class="text-center">
+              <small class="text-secondary d-block">Score consolidado</small>
+              <h2 class="fw-bold text-success mb-0">{{ consolidatedScore }}/100</h2>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section *ngIf="activeMenu !== 'executive'" class="card border-0 shadow-sm p-5 text-center">
+      <i class="bi bi-tools fs-1 text-secondary mb-3"></i>
+      <h5>Seção "{{ activeMenu }}" em construção</h5>
+      <p class="text-secondary">Essa área será detalhada em uma próxima etapa do projeto.</p>
+    </section>
+  </main>
+</div>

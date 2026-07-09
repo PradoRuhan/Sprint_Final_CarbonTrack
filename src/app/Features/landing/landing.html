@@ -12,8 +12,8 @@
       <a routerLink="/login" class="btn btn-success btn-lg rounded-pill px-4">
         Entrar na Plataforma
       </a>
-      <a href="#como-funciona" class="btn btn-outline-light btn-lg rounded-pill px-4">
-        Conheça o Projeto
+      <a href="#simulador" class="btn btn-outline-light btn-lg rounded-pill px-4">
+        Simular Potencial
       </a>
     </div>
   </div>
@@ -41,6 +41,82 @@
           </span>
           <h5 class="fw-bold">{{ step.title }}</h5>
           <p class="text-secondary small mb-0">{{ step.description }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SIMULADOR -->
+<section id="simulador" class="py-5 simulator-section">
+  <div class="container">
+    <h2 class="text-center fw-bold mb-2 text-white">Simule seu Potencial de Carbono</h2>
+    <p class="text-center text-white-50 mb-5">
+      Informe a área da sua propriedade e o bioma para ter uma estimativa educacional
+      do seu potencial no mercado de carbono.
+    </p>
+
+    <div class="row justify-content-center">
+      <div class="col-lg-9">
+        <div class="card simulator-card border-0 shadow-lg">
+          <div class="row g-0">
+
+            <!-- Formulário -->
+            <div class="col-md-6 p-4 p-md-5">
+              <form [formGroup]="simulatorForm">
+                <label class="form-label fw-bold">Área elegível (hectares)</label>
+                <input
+                  type="number"
+                  class="form-control form-control-lg mb-2"
+                  formControlName="areaHectares"
+                  min="1"
+                  max="100000"
+                />
+                <input
+                  type="range"
+                  class="form-range mb-4"
+                  min="1"
+                  max="1000"
+                  formControlName="areaHectares"
+                />
+
+                <label class="form-label fw-bold">Bioma</label>
+                <select class="form-select form-select-lg mb-2" formControlName="biome">
+                  <option *ngFor="let b of biomeFactors" [value]="b.name">{{ b.name }}</option>
+                </select>
+
+                <p class="small text-secondary mt-3 mb-0">
+                  <i class="bi bi-info-circle"></i>
+                  Os valores são estimativas educacionais baseadas em médias ilustrativas
+                  por bioma e não representam garantia de certificação ou comercialização.
+                </p>
+              </form>
+            </div>
+
+            <!-- Resultado -->
+            <div class="col-md-6 result-panel p-4 p-md-5 text-white d-flex flex-column justify-content-center">
+              <ng-container *ngIf="simulationResult() as result; else emptyResult">
+                <small class="text-uppercase text-white-50 fw-bold">Potencial estimado</small>
+                <h1 class="display-5 fw-bold mb-0">{{ result.tco2ePerYear | number }}</h1>
+                <p class="mb-4">toneladas de CO₂e por ano</p>
+
+                <small class="text-uppercase text-white-50 fw-bold">Valor estimado (mercado voluntário)</small>
+                <h2 class="fw-bold mb-0">
+                  {{ result.estimatedValueBRL | currency:'BRL':'symbol':'1.0-0' }}
+                </h2>
+                <small class="text-white-50">por ano, considerando preço médio ilustrativo por tonelada</small>
+
+                <a routerLink="/register" class="btn btn-light rounded-pill mt-4 fw-bold">
+                  Quero participar <i class="bi bi-arrow-right"></i>
+                </a>
+              </ng-container>
+
+              <ng-template #emptyResult>
+                <p class="mb-0">Informe uma área válida para ver a estimativa.</p>
+              </ng-template>
+            </div>
+
+          </div>
         </div>
       </div>
     </div>
