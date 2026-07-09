@@ -6,44 +6,43 @@ import { Producer } from '../models/producer.model';
 const MOCK_PRODUCERS: Producer[] = [
   {
     id: 'p1',
-    name: 'Maria Produtora',
-    propertyName: 'Sítio Boa Esperança',
-    biome: 'Cerrado',
-    eligibleAreaHectares: 42,
-    certificationStage: 'Monitoramento',
-    estimatedCarbonPotential: 320,
-    propertyImageUrl: 'assets/images/property-1.jpg',
-    documents: [
-      { id: 'd1', name: 'CAR - Cadastro Ambiental Rural', status: 'aprovado' },
-      { id: 'd2', name: 'Comprovante de Propriedade', status: 'enviado' },
-      { id: 'd3', name: 'Laudo Técnico', status: 'pendente' },
-    ],
-  },
-  {
-    id: 'p2',
-    name: 'João da Silva',
-    propertyName: 'Fazenda Vale Verde',
-    biome: 'Amazônia',
-    eligibleAreaHectares: 78,
-    certificationStage: 'Validação Técnica',
-    estimatedCarbonPotential: 610,
-    propertyImageUrl: 'assets/images/property-2.jpg',
-    documents: [
-      { id: 'd4', name: 'CAR - Cadastro Ambiental Rural', status: 'aprovado' },
-      { id: 'd5', name: 'Comprovante de Propriedade', status: 'aprovado' },
-    ],
-  },
-  {
-    id: 'p3',
-    name: 'Ana Cooperativada',
-    propertyName: 'Chácara Nova Aurora',
+    name: 'Joana',
+    propertyName: 'Fazenda Boa Esperança',
+    location: 'Viçosa, MG · Zona da Mata, MG',
+    cooperativeName: 'Cooperativa Vale Verde',
     biome: 'Mata Atlântica',
-    eligibleAreaHectares: 15,
-    certificationStage: 'Certificado',
-    estimatedCarbonPotential: 145,
-    propertyImageUrl: 'assets/images/property-3.jpg',
+    totalAreaHectares: 142,
+    eligibleAreaHectares: 108,
+    certificationStage: 'Validação',
+    certificationProgressPercent: 62,
+    estimatedMonthsToComplete: 4,
+    estimatedCarbonPotential: 1240,
+    propertyImageUrl: 'https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=1200&q=80',
     documents: [
-      { id: 'd6', name: 'CAR - Cadastro Ambiental Rural', status: 'aprovado' },
+      { id: 'd1', name: 'CAR — Cadastro Ambiental Rural', status: 'aprovado' },
+      { id: 'd2', name: 'Matrícula da propriedade', status: 'aprovado' },
+      { id: 'd3', name: 'Termo de adesão', status: 'aprovado' },
+      { id: 'd4', name: 'Laudo técnico', status: 'pendente' },
+    ],
+    satellite: {
+      ndviAverage: 0.82,
+      vegetationCoverPercent: 94,
+      activeAlerts: 0,
+    },
+    timeline: [
+      { order: 1, title: 'Elegibilidade', date: '12 mar 2026', status: 'completed' },
+      { order: 2, title: 'Cadastro', date: '28 mar 2026', status: 'completed' },
+      { order: 3, title: 'Projeto Coletivo', date: '10 abr 2026', status: 'completed' },
+      { order: 4, title: 'Validação Técnica', status: 'current' },
+      { order: 5, title: 'Monitoramento Satelital', status: 'pending' },
+      { order: 6, title: 'Certificação', status: 'pending' },
+      { order: 7, title: 'Comercialização', status: 'pending' },
+    ],
+    activities: [
+      { id: 'a1', title: 'Novo alerta satelital recebido', description: 'Cobertura vegetal estável em 94%.', timeAgo: 'há 2h' },
+      { id: 'a2', title: 'Documento aprovado', description: 'Seu Termo de Adesão foi validado pela consultoria.', timeAgo: 'há 1d' },
+      { id: 'a3', title: 'Reunião agendada', description: 'Visita técnica marcada para 18 nov.', timeAgo: 'há 2d' },
+      { id: 'a4', title: 'Estimativa atualizada', description: 'Potencial de crédito revisado para 1.240 tCO₂e.', timeAgo: 'há 3d' },
     ],
   },
 ];
@@ -51,8 +50,6 @@ const MOCK_PRODUCERS: Producer[] = [
 @Injectable({ providedIn: 'root' })
 export class ProducerService {
   private producers$ = new BehaviorSubject<Producer[]>(MOCK_PRODUCERS);
-
-  // termo de busca digitado pelo admin na tabela
   private searchTerm$ = new BehaviorSubject<string>('');
 
   getAll(): Observable<Producer[]> {
@@ -60,22 +57,24 @@ export class ProducerService {
   }
 
   getById(id: string): Observable<Producer | undefined> {
-    return this.producers$.pipe(
-      map((producers) => producers.find((p) => p.id === id))
-    );
+    return this.producers$.pipe(map((producers) => producers.find((p) => p.id === id)));
+  }
+
+  // No mock, o produtor logado é sempre o primeiro registro
+  getCurrentProducer(): Observable<Producer> {
+    return this.producers$.pipe(map((producers) => producers[0]));
   }
 
   setSearchTerm(term: string): void {
     this.searchTerm$.next(term);
   }
 
-  // Observable já filtrado — é isso que o componente da tabela do admin vai consumir
   getFilteredProducers(): Observable<Producer[]> {
     return this.searchTerm$.pipe(
-      debounceTime(300),        // espera 300ms depois que o usuário para de digitar
-      distinctUntilChanged(),   // ignora se o termo não mudou
+      debounceTime(300),
+      distinctUntilChanged(),
       map((term) => term.trim().toLowerCase()),
-      filter(() => true),      // (mantido para ilustrar o operador filter no pipeline)
+      filter(() => true),
       map((term) =>
         term.length === 0
           ? MOCK_PRODUCERS
@@ -86,12 +85,6 @@ export class ProducerService {
                 p.biome.toLowerCase().includes(term)
             )
       )
-    );
-  }
-
-  getCertificationStages(): Observable<string[]> {
-    return this.producers$.pipe(
-      map((producers) => producers.map((p) => p.certificationStage))
     );
   }
 }

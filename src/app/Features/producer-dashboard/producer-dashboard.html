@@ -1,1 +1,248 @@
-<p>producer-dashboard works!</p>
+<div class="dashboard-layout" *ngIf="producer$ | async as producer">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div class="sidebar-brand">
+      <span class="brand-icon">🌱</span>
+      <div>
+        <div class="fw-bold">CarbonTrack</div>
+        <small class="text-uppercase text-secondary">Produtor</small>
+      </div>
+    </div>
+
+    <nav class="sidebar-nav">
+      <button class="nav-item" [class.active]="activeMenu === 'overview'" (click)="setMenu('overview')">
+        <i class="bi bi-grid-fill"></i> Visão Geral
+      </button>
+      <button class="nav-item" [class.active]="activeMenu === 'property'" (click)="setMenu('property')">
+        <i class="bi bi-map-fill"></i> Propriedade
+      </button>
+      <button class="nav-item" [class.active]="activeMenu === 'documents'" (click)="setMenu('documents')">
+        <i class="bi bi-file-earmark-text-fill"></i> Documentos
+      </button>
+      <button class="nav-item" [class.active]="activeMenu === 'notifications'" (click)="setMenu('notifications')">
+        <i class="bi bi-bell-fill"></i> Notificações
+      </button>
+    </nav>
+
+    <div class="sidebar-footer">
+      <button class="nav-item" (click)="setMenu('settings')">
+        <i class="bi bi-gear-fill"></i> Configurações
+      </button>
+      <button class="nav-item text-danger" (click)="logout()">
+        <i class="bi bi-box-arrow-right"></i> Sair
+      </button>
+    </div>
+
+    <div class="support-card">
+      <p class="mb-1 small">Suporte</p>
+      <p class="fw-bold mb-2">Fale com um especialista</p>
+      <button class="btn btn-light btn-sm w-100 rounded-pill">Abrir chat</button>
+    </div>
+  </aside>
+
+  <!-- MAIN CONTENT -->
+  <main class="dashboard-main">
+
+    <!-- TOPBAR -->
+    <header class="dashboard-topbar">
+      <div>
+        <h4 class="fw-bold mb-0">Olá, {{ producer.name }} 👋</h4>
+        <small class="text-secondary">{{ producer.propertyName }} · {{ producer.location }}</small>
+      </div>
+      <div class="d-flex align-items-center gap-3">
+        <div class="search-box">
+          <i class="bi bi-search"></i>
+          <input type="text" placeholder="Buscar..." />
+        </div>
+        <button class="icon-btn position-relative">
+          <i class="bi bi-bell"></i>
+          <span class="notif-dot"></span>
+        </button>
+        <div class="avatar-circle">{{ producer.name.charAt(0) }}</div>
+      </div>
+    </header>
+
+    <!-- OVERVIEW -->
+    <section *ngIf="activeMenu === 'overview'">
+      <div class="row g-4 mb-4">
+        <!-- Card propriedade -->
+        <div class="col-lg-8">
+          <div class="card property-card border-0 shadow-sm">
+            <div class="property-image" [style.background-image]="'url(' + producer.propertyImageUrl + ')'">
+              <span class="badge bg-success">{{ producer.biome }}</span>
+              <span class="badge bg-dark">{{ producer.cooperativeName }}</span>
+            </div>
+            <div class="p-3">
+              <h5 class="fw-bold mb-0">{{ producer.propertyName }}</h5>
+              <small class="text-secondary">
+                <i class="bi bi-geo-alt-fill"></i> {{ producer.location }} · {{ producer.totalAreaHectares }} ha
+              </small>
+            </div>
+
+            <div class="row g-0 border-top mini-stats">
+              <div class="col-3 mini-stat">
+                <i class="bi bi-bounding-box text-success"></i>
+                <small class="d-block text-secondary">Área elegível</small>
+                <strong>{{ producer.eligibleAreaHectares }} ha</strong>
+              </div>
+              <div class="col-3 mini-stat">
+                <i class="bi bi-tree-fill text-success"></i>
+                <small class="d-block text-secondary">Bioma</small>
+                <strong>{{ producer.biome }}</strong>
+              </div>
+              <div class="col-3 mini-stat">
+                <i class="bi bi-graph-up-arrow text-success"></i>
+                <small class="d-block text-secondary">tCO₂e estimado</small>
+                <strong>{{ producer.estimatedCarbonPotential | number }}</strong>
+              </div>
+              <div class="col-3 mini-stat">
+                <i class="bi bi-clock-fill text-success"></i>
+                <small class="d-block text-secondary">Estágio atual</small>
+                <strong>{{ producer.certificationStage }}</strong>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card certificação -->
+        <div class="col-lg-4">
+          <div class="card border-0 shadow-sm h-100 p-4">
+            <div class="d-flex justify-content-between align-items-start mb-3">
+              <h6 class="fw-bold mb-0">Certificação</h6>
+              <span class="badge bg-warning-subtle text-warning-emphasis">Em andamento</span>
+            </div>
+            <h1 class="fw-bold text-success mb-1">{{ producer.certificationProgressPercent }}%</h1>
+            <small class="text-secondary">3 de 7 etapas concluídas</small>
+            <div class="progress my-3" style="height: 8px;">
+              <div class="progress-bar bg-success" [style.width.%]="producer.certificationProgressPercent"></div>
+            </div>
+            <small class="text-secondary">
+              Estimativa de conclusão: {{ producer.estimatedMonthsToComplete }} meses.
+            </small>
+            <small class="fst-italic text-secondary mt-3">
+              Volume de carbono exibido é uma estimativa educacional e não vinculante.
+            </small>
+          </div>
+        </div>
+      </div>
+
+      <div class="row g-4 mb-4">
+        <!-- Timeline -->
+        <div class="col-lg-8">
+          <div class="card border-0 shadow-sm p-4">
+            <h6 class="fw-bold mb-4">Linha do tempo da certificação</h6>
+            <div class="timeline">
+              <div class="timeline-item" *ngFor="let step of producer.timeline">
+                <div
+                  class="timeline-dot"
+                  [class.done]="step.status === 'completed'"
+                  [class.current]="step.status === 'current'"
+                >
+                  <i class="bi bi-check-lg" *ngIf="step.status === 'completed'"></i>
+                  <i class="bi bi-clock-fill" *ngIf="step.status === 'current'"></i>
+                  <span *ngIf="step.status === 'pending'">{{ step.order }}</span>
+                </div>
+                <div class="timeline-content">
+                  <strong>{{ step.title }}</strong>
+                  <div class="small text-secondary">
+                    {{ step.date ? step.date : (step.status === 'current' ? 'Em andamento' : 'Aguardando') }}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Monitoramento Satelital -->
+        <div class="col-lg-4">
+          <div class="card border-0 shadow-sm h-100 overflow-hidden">
+            <div class="satellite-image">
+              <span class="live-badge"><i class="bi bi-circle-fill"></i> AO VIVO</span>
+            </div>
+            <div class="p-3">
+              <h6 class="fw-bold mb-3">Monitoramento Satelital</h6>
+              <div class="d-flex justify-content-between mb-2">
+                <span class="text-secondary small">NDVI médio</span>
+                <strong>{{ producer.satellite.ndviAverage }}</strong>
+              </div>
+              <div class="d-flex justify-content-between mb-2">
+                <span class="text-secondary small">Cobertura vegetal</span>
+                <strong>{{ producer.satellite.vegetationCoverPercent }}%</strong>
+              </div>
+              <div class="d-flex justify-content-between">
+                <span class="text-secondary small">Alertas ativos</span>
+                <strong>{{ producer.satellite.activeAlerts }}</strong>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row g-4 mb-4">
+        <!-- Documentos -->
+        <div class="col-lg-6">
+          <div class="card border-0 shadow-sm p-4 h-100">
+            <div class="d-flex justify-content-between mb-3">
+              <h6 class="fw-bold mb-0">Documentos</h6>
+              <a href="javascript:void(0)" class="small text-success fw-bold" (click)="setMenu('documents')">
+                Ver todos <i class="bi bi-arrow-up-right"></i>
+              </a>
+            </div>
+            <div class="document-row" *ngFor="let doc of producer.documents">
+              <div class="d-flex align-items-center gap-2">
+                <i class="bi bi-file-earmark-text text-secondary"></i>
+                <span>{{ doc.name }}</span>
+              </div>
+              <span class="badge-status" [ngClass]="statusBadgeClass(doc.status)">
+                {{ doc.status | titlecase }}
+              </span>
+            </div>
+            <button class="btn btn-outline-success rounded-3 mt-2">
+              <i class="bi bi-upload"></i> Enviar novo documento
+            </button>
+          </div>
+        </div>
+
+        <!-- Ações rápidas -->
+        <div class="col-lg-6">
+          <div class="card border-0 shadow-sm p-4 h-100">
+            <h6 class="fw-bold mb-3">Ações rápidas</h6>
+            <button class="quick-action">
+              <i class="bi bi-calendar-event text-success"></i> Agendar visita técnica
+            </button>
+            <button class="quick-action">
+              <i class="bi bi-chat-dots text-success"></i> Falar com consultor
+            </button>
+            <button class="quick-action">
+              <i class="bi bi-file-earmark-arrow-down text-success"></i> Solicitar relatório
+            </button>
+            <button class="quick-action">
+              <i class="bi bi-graph-up-arrow text-success"></i> Ver estimativa de crédito
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Atividades recentes -->
+      <div class="card border-0 shadow-sm p-4">
+        <h6 class="fw-bold mb-3">Atividades recentes</h6>
+        <div class="activity-row" *ngFor="let activity of producer.activities">
+          <span class="activity-dot"></span>
+          <div class="flex-grow-1">
+            <strong>{{ activity.title }}</strong>
+            <div class="small text-secondary">{{ activity.description }}</div>
+          </div>
+          <small class="text-secondary">{{ activity.timeAgo }}</small>
+        </div>
+      </div>
+    </section>
+
+    <!-- Placeholder para outras seções -->
+    <section *ngIf="activeMenu !== 'overview'" class="card border-0 shadow-sm p-5 text-center">
+      <i class="bi bi-tools fs-1 text-secondary mb-3"></i>
+      <h5>Seção "{{ activeMenu }}" em construção</h5>
+      <p class="text-secondary">Essa área será detalhada em uma próxima etapa do projeto.</p>
+    </section>
+  </main>
+</div>
