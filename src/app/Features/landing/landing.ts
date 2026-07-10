@@ -53,6 +53,23 @@ export class Landing implements OnInit {
 
   heroImageUrl = 'image/platio_agro_plantas.jpg';
 
+  heroStats = [
+    {value: '2.4M', label: 'ha monitorados'},
+    {value: '480+', label: 'Cooperativas participantes'},
+    {value: '12k', label: 'Produtores rurais engajados'},
+  ];
+
+  heroProject = {
+    name: 'Cooperativa Vale Verde',
+    location: 'Cerrado · MG',
+    status: 'Certificado',
+    eligibleArea: '18.420 ha',
+    estimatedTco2e: '42.180',
+    producers: '286',
+    currentStage: 'Monitoramento',
+    progressPercentage: 72,
+  }
+
   steps: Step[] = [
     { order: 1, title: 'Elegibilidade', description: 'O produtor verifica se sua propriedade é elegível para participar.', icon: '✅' },
     { order: 2, title: 'Cadastro', description: 'Cadastro inicial e vínculo com um projeto coletivo.', icon: '📝' },

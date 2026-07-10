@@ -1,0 +1,57 @@
+.onboarding-section {
+  min-height: 100vh;
+  background: #f6f8f7;
+}
+
+.stepper {
+  display: flex;
+  align-items: center;
+}
+
+.stepper-circle {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: #fff;
+  border: 2px solid #d0d5dd;
+  color: #98a2b3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.stepper-item.current .stepper-circle,
+.stepper-item.done .stepper-circle {
+  border-color: #14532d;
+  background: #14532d;
+  color: #fff;
+}
+
+.stepper-line {
+  flex-grow: 1;
+  height: 2px;
+  background: #d0d5dd;
+  margin: 0 0.5rem;
+}
+
+.stepper-line.filled {
+  background: #14532d;
+}
+
+.upload-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  border: 2px dashed #d0d5dd;
+  border-radius: 14px;
+  padding: 2rem;
+  cursor: pointer;
+  transition: border-color 0.15s ease;
+}
+
+.upload-box:hover {
+  border-color: #14532d;
+}

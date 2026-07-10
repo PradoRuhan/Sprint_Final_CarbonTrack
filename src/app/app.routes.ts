@@ -19,6 +19,12 @@ export const routes: Routes = [
       import('./features/auth/register/register').then((m) => m.Register),
   },
   {
+    path: 'onboarding',
+    loadComponent: () =>
+      import('./features/onboarding/onboarding').then((m) => m.Onboarding),
+    canActivate: [authGuard],
+  },
+  {
     path: 'dashboard/producer',
     loadComponent: () =>
       import('./features/producer-dashboard/producer-dashboard').then(

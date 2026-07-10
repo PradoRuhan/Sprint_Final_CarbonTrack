@@ -76,10 +76,9 @@ export class Register {
         acceptedTerms: raw.acceptedTerms!,
       })
       .subscribe({
-        next: (user) => {
+        next: () => {
           this.loading.set(false);
-          const redirectPath = user.role === 'admin' ? '/dashboard/admin' : '/dashboard/producer';
-          this.router.navigate([redirectPath]);
+          this.router.navigate(['/onboarding']);
         },
         error: (err) => {
           this.loading.set(false);

@@ -1,0 +1,148 @@
+<section class="onboarding-section py-5">
+  <div class="container" style="max-width: 640px;">
+    <h2 class="fw-bold mb-1">Cadastro na Plataforma</h2>
+    <p class="text-secondary mb-4">Siga os passos abaixo para ingressar seu projeto no mercado de carbono.</p>
+
+    <div class="stepper mb-4">
+      <div class="stepper-item" [class.done]="currentStep() > 1" [class.current]="currentStep() === 1">
+        <div class="stepper-circle">
+          <i class="bi bi-check-lg" *ngIf="currentStep() > 1"></i>
+          <span *ngIf="currentStep() <= 1">1</span>
+        </div>
+      </div>
+      <div class="stepper-line" [class.filled]="currentStep() > 1"></div>
+      <div class="stepper-item" [class.done]="currentStep() > 2" [class.current]="currentStep() === 2">
+        <div class="stepper-circle">
+          <i class="bi bi-check-lg" *ngIf="currentStep() > 2"></i>
+          <span *ngIf="currentStep() <= 2">2</span>
+        </div>
+      </div>
+      <div class="stepper-line" [class.filled]="currentStep() > 2"></div>
+      <div class="stepper-item" [class.current]="currentStep() === 3">
+        <div class="stepper-circle"><span>3</span></div>
+      </div>
+    </div>
+
+    <div class="card border-0 shadow-sm p-4 p-md-5">
+
+      <!-- STEP 1 -->
+      <div *ngIf="currentStep() === 1">
+        <h5 class="fw-bold mb-1">Dados do Produtor / Cooperativa</h5>
+        <p class="text-secondary small mb-4">Informações básicas para registro na plataforma.</p>
+
+        <form [formGroup]="stepOneForm">
+          <label class="form-label fw-bold small">Nome Completo ou Razão Social</label>
+          <input type="text" class="form-control mb-3" formControlName="fullName"
+                 placeholder="Ex: Cooperativa Agroflorestal São José"
+                 [class.is-invalid]="step1.fullName.invalid && step1.fullName.touched" />
+
+          <div class="row">
+            <div class="col-md-6">
+              <label class="form-label fw-bold small">CPF / CNPJ</label>
+              <input type="text" class="form-control mb-3" formControlName="document"
+                     placeholder="00.000.000/0000-00"
+                     [class.is-invalid]="step1.document.invalid && step1.document.touched" />
+            </div>
+            <div class="col-md-6">
+              <label class="form-label fw-bold small">Telefone / WhatsApp</label>
+              <input type="text" class="form-control mb-3" formControlName="phone"
+                     placeholder="(00) 00000-0000"
+                     [class.is-invalid]="step1.phone.invalid && step1.phone.touched" />
+            </div>
+          </div>
+
+          <label class="form-label fw-bold small">E-mail</label>
+          <input type="email" class="form-control mb-4" formControlName="email"
+                 placeholder="contato@cooperativa.com.br"
+                 [class.is-invalid]="step1.email.invalid && step1.email.touched" />
+
+          <div class="d-flex justify-content-end">
+            <button type="button" class="btn btn-success rounded-pill px-4" (click)="nextStep()">
+              Próximo Passo <i class="bi bi-chevron-right"></i>
+            </button>
+          </div>
+        </form>
+      </div>
+
+      <!-- STEP 2 -->
+      <div *ngIf="currentStep() === 2">
+        <h5 class="fw-bold mb-1">Dados da Propriedade</h5>
+        <p class="text-secondary small mb-4">Localização e área total para análise de elegibilidade.</p>
+
+        <form [formGroup]="stepTwoForm">
+          <label class="form-label fw-bold small">Nome da Propriedade</label>
+          <input type="text" class="form-control mb-3" formControlName="propertyName"
+                 placeholder="Fazenda Esperança"
+                 [class.is-invalid]="step2.propertyName.invalid && step2.propertyName.touched" />
+
+          <div class="row">
+            <div class="col-md-8">
+              <label class="form-label fw-bold small">Município</label>
+              <input type="text" class="form-control mb-3" formControlName="city"
+                     placeholder="Ex: Rio Branco"
+                     [class.is-invalid]="step2.city.invalid && step2.city.touched" />
+            </div>
+            <div class="col-md-4">
+              <label class="form-label fw-bold small">UF</label>
+              <input type="text" class="form-control mb-3" formControlName="state"
+                     placeholder="AC" maxlength="2"
+                     [class.is-invalid]="step2.state.invalid && step2.state.touched" />
+            </div>
+          </div>
+
+          <div class="row mb-4">
+            <div class="col-md-6">
+              <label class="form-label fw-bold small">Área Total (ha)</label>
+              <input type="number" class="form-control" formControlName="totalArea"
+                     placeholder="500"
+                     [class.is-invalid]="step2.totalArea.invalid && step2.totalArea.touched" />
+            </div>
+            <div class="col-md-6">
+              <label class="form-label fw-bold small">Área Preservada (ha)</label>
+              <input type="number" class="form-control" formControlName="preservedArea"
+                     placeholder="350"
+                     [class.is-invalid]="step2.preservedArea.invalid && step2.preservedArea.touched" />
+            </div>
+          </div>
+
+          <div class="d-flex justify-content-between">
+            <button type="button" class="btn btn-link text-secondary" (click)="previousStep()">Voltar</button>
+            <button type="button" class="btn btn-success rounded-pill px-4" (click)="nextStep()">
+              Próximo Passo <i class="bi bi-chevron-right"></i>
+            </button>
+          </div>
+        </form>
+      </div>
+
+      <!-- STEP 3 -->
+      <div *ngIf="currentStep() === 3">
+        <h5 class="fw-bold mb-1">Documentação (CAR)</h5>
+        <p class="text-secondary small mb-4">O Cadastro Ambiental Rural é obrigatório para validação.</p>
+
+        <form [formGroup]="stepThreeForm">
+          <label class="form-label fw-bold small">Número do Recibo do CAR</label>
+          <input type="text" class="form-control mb-4" formControlName="carNumber"
+                 placeholder="AC-1234567-..."
+                 [class.is-invalid]="step3.carNumber.invalid && step3.carNumber.touched" />
+
+          <label class="upload-box mb-4" for="carFile">
+            <i class="bi bi-cloud-arrow-up-fill fs-2 text-success mb-2"></i>
+            <strong>Fazer upload do CAR (PDF)</strong>
+            <small class="text-secondary">
+              {{ uploadedFileName() ? uploadedFileName() : 'Arraste e solte o arquivo aqui ou clique para selecionar.' }}
+            </small>
+            <input type="file" id="carFile" accept="application/pdf" hidden (change)="onFileSelected($event)" />
+          </label>
+
+          <div class="d-flex justify-content-between">
+            <button type="button" class="btn btn-link text-secondary" (click)="previousStep()">Voltar</button>
+            <button type="button" class="btn btn-success rounded-pill px-4" (click)="finish()">
+              Concluir Cadastro
+            </button>
+          </div>
+        </form>
+      </div>
+
+    </div>
+  </div>
+</section>
