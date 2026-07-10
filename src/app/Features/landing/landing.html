@@ -77,32 +77,39 @@
   </div>
 </section>
 
-<!-- CARROSSEL -->
-<section id="mercado-carbono">
-  <app-carousel></app-carousel>
-</section>
-
 <!-- COMO FUNCIONA -->
-<section id="como-funciona" class="py-5 bg-light">
+<section id="como-funciona" class="py-5 how-it-works-section">
   <div class="container">
-    <h2 class="text-center fw-bold mb-2">Como o CarbonTrack Funciona</h2>
-    <p class="text-center text-secondary mb-5">
-      Uma jornada simplificada, do cadastro à comercialização dos créditos de carbono.
-    </p>
+    <div class="text-center mb-5">
+      <span class="section-badge">🌱 Como a CarbonTrack Funciona</span>
+      <h2 class="fw-bold display-6 mt-3 mb-2">Da propriedade ao crédito de carbono</h2>
+      <p class="text-secondary mb-0">
+        Uma jornada simplificada, do cadastro à comercialização dos créditos de carbono.
+      </p>
+    </div>
 
     <div class="row g-4">
-      <div class="col-md-6 col-lg-3" *ngFor="let step of steps">
-        <div class="card h-100 border-0 shadow-sm text-center p-3 step-card">
-          <div class="fs-1 mb-2">{{ step.icon }}</div>
-          <span class="badge bg-success rounded-pill mb-2 align-self-center">
-            Etapa {{ step.order }}
-          </span>
-          <h5 class="fw-bold">{{ step.title }}</h5>
-          <p class="text-secondary small mb-0">{{ step.description }}</p>
+      <div class="col-md-6 col-lg-4" *ngFor="let step of steps">
+        <div class="card h-100 border-0 shadow-sm p-4 step-card-v2">
+          <div class="d-flex align-items-start gap-3">
+            <div class="step-icon-circle">
+              <i class="bi" [ngClass]="step.icon"></i>
+            </div>
+            <div>
+              <small class="step-tag">ETAPA {{ step.order < 10 ? '0' + step.order : step.order }}</small>
+              <h6 class="fw-bold mt-1 mb-2">{{ step.title }}</h6>
+              <p class="text-secondary small mb-0">{{ step.description }}</p>
+            </div>
+          </div>
         </div>
       </div>
     </div>
   </div>
+</section>
+
+<!-- CARROSSEL -->
+<section id="mercado-carbono">
+  <app-carousel></app-carousel>
 </section>
 
 <!-- SIMULADOR -->
@@ -117,7 +124,8 @@
     </div>
 
     <div class="row g-4 align-items-start">
-      <!-- Formulário (coluna estreita) -->
+      
+<!-- Formulário (coluna estreita) -->
       <div class="col-lg-4">
         <div class="card simulator-form-card border-0 shadow-lg h-100">
           <div class="card-body p-4">

@@ -71,13 +71,12 @@ export class Landing implements OnInit {
   }
 
   steps: Step[] = [
-    { order: 1, title: 'Elegibilidade', description: 'O produtor verifica se sua propriedade é elegível para participar.', icon: '✅' },
-    { order: 2, title: 'Cadastro', description: 'Cadastro inicial e vínculo com um projeto coletivo.', icon: '📝' },
-    { order: 3, title: 'Projeto Coletivo', description: 'A propriedade é organizada dentro de um projeto de cooperativa ou consultoria.', icon: '🤝' },
-    { order: 4, title: 'Validação Técnica', description: 'Consultorias ambientais analisam e validam o projeto.', icon: '🔍' },
-    { order: 5, title: 'Monitoramento', description: 'Indicadores ambientais e dados geoespaciais acompanham o progresso.', icon: '🛰️' },
-    { order: 6, title: 'Certificação', description: 'O projeto recebe certificação conforme os padrões do mercado.', icon: '📜' },
-    { order: 7, title: 'Comercialização', description: 'Os créditos gerados podem ser destinados à comercialização.', icon: '💹' },
+    { order: 1, title: 'Elegibilidade & Cadastro inicial', description: 'O produtor verifica se sua propriedade é elegível para participar e faz o cadastro inicial.', icon: '✅' },
+    { order: 2, title: 'Projeto Coletivo', description: 'A propriedade é organizada dentro de um projeto de cooperativa ou consultoria.', icon: '🤝' },
+    { order: 3, title: 'Validação Técnica', description: 'Consultorias ambientais analisam e validam o projeto.', icon: '🔍' },
+    { order: 4, title: 'Monitoramento', description: 'Indicadores ambientais e dados geoespaciais acompanham o progresso.', icon: '🛰️' },
+    { order: 5, title: 'Certificação', description: 'O projeto recebe certificação conforme os padrões do mercado.', icon: '📜' },
+    { order: 6, title: 'Comercialização', description: 'Os créditos gerados podem ser destinados à comercialização.', icon: '💹' },
   ];
 
   esgCards: EsgCard[] = [
@@ -131,7 +130,9 @@ export class Landing implements OnInit {
       )
       .subscribe((result) => {
         this.currentResult = result;
-        // Se já simulou antes, atualiza o resultado em tempo real conforme o usuário ajusta os campos
+
+// Se já simulou antes, atualiza o resultado em tempo real conforme o usuário ajusta os campos
+
         if (this.hasSimulated() && result) {
           this.simulationResult.set(result);
           this.projection.set(this.buildProjection(result));
