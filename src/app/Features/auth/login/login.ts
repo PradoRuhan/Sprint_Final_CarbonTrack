@@ -15,6 +15,8 @@ export class Login {
   private authService = inject(AuthService);
   private router = inject(Router);
 
+  backgroundImageUrl = 'image/paisagem_fazenda_agro.jpg';
+
   loading = signal(false);
   errorMessage = signal<string | null>(null);
   showPassword = signal(false);

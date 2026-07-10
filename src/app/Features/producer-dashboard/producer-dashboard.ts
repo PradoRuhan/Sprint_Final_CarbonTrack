@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { AuthService } from '../../core/services/auth.service';
@@ -21,9 +21,15 @@ export class ProducerDashboard {
   producer$: Observable<Producer> = this.producerService.getCurrentProducer();
 
   activeMenu = 'overview';
+  sidebarOpen = signal(false);
+
+  toggleSidebar(): void {
+    this.sidebarOpen.update((v) => !v);
+  }
 
   setMenu(menu: string): void {
     this.activeMenu = menu;
+    this.sidebarOpen.set(false);
   }
 
   logout(): void {

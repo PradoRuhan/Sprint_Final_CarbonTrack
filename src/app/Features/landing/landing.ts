@@ -51,6 +51,8 @@ export class Landing implements OnInit {
   private fb = inject(FormBuilder);
   private destroyRef = inject(DestroyRef);
 
+  heroImageUrl = 'image/platio_agro_plantas.jpg';
+
   steps: Step[] = [
     { order: 1, title: 'Elegibilidade', description: 'O produtor verifica se sua propriedade é elegível para participar.', icon: '✅' },
     { order: 2, title: 'Cadastro', description: 'Cadastro inicial e vínculo com um projeto coletivo.', icon: '📝' },

@@ -224,7 +224,60 @@
 .badge-warning { background: #fef3c7; color: #92400e; }
 .badge-danger { background: #fee2e2; color: #991b1b; }
 
+.mobile-menu-btn {
+  display: none;
+  background: #fff;
+  border: 1px solid #e5e5e5;
+  border-radius: 10px;
+  width: 40px;
+  height: 40px;
+  align-items: center;
+  justify-content: center;
+}
+
+.sidebar-overlay {
+  display: none;
+}
+
 @media (max-width: 992px) {
-  .sidebar { display: none; }
-  .dashboard-main { max-width: 100%; }
+  .mobile-menu-btn {
+    display: inline-flex;
+  }
+
+  .sidebar {
+    position: fixed;
+    left: -280px;
+    top: 0;
+    height: 100vh;
+    width: 260px;
+    z-index: 1045;
+    transition: left 0.25s ease;
+    box-shadow: 4px 0 20px rgba(0, 0, 0, 0.1);
+  }
+
+  .sidebar.sidebar-open {
+    left: 0;
+  }
+
+  .sidebar-overlay.ng-star-inserted {
+    display: block;
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 1040;
+  }
+
+  .dashboard-main {
+    max-width: 100%;
+    padding: 1.25rem;
+  }
+
+  .dashboard-topbar {
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  .search-box {
+    display: none;
+  }
 }

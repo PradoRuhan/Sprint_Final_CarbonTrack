@@ -1,7 +1,10 @@
 <div class="dashboard-layout">
 
+  <!-- OVERLAY MOBILE -->
+  <div class="sidebar-overlay" *ngIf="sidebarOpen()" (click)="toggleSidebar()"></div>
+
   <!-- SIDEBAR -->
-  <aside class="sidebar">
+  <aside class="sidebar" [class.sidebar-open]="sidebarOpen()">
     <div class="sidebar-brand">
       <span class="brand-icon">🌱</span>
       <div>
@@ -45,9 +48,14 @@
   <main class="dashboard-main">
 
     <header class="dashboard-topbar">
-      <div>
-        <h4 class="fw-bold mb-0">Executive Dashboard</h4>
-        <small class="text-secondary">Visão consolidada da operação nacional</small>
+      <div class="d-flex align-items-center gap-3">
+        <button class="mobile-menu-btn" (click)="toggleSidebar()">
+          <i class="bi bi-list"></i>
+        </button>
+        <div>
+          <h4 class="fw-bold mb-0">Executive Dashboard</h4>
+          <small class="text-secondary">Visão consolidada da operação nacional</small>
+        </div>
       </div>
       <div class="d-flex align-items-center gap-3">
         <div class="search-box">
@@ -62,9 +70,9 @@
       </div>
     </header>
 
+    <!-- EXECUTIVE -->
     <section *ngIf="activeMenu === 'executive' && stats() as s">
 
-      <!-- STAT CARDS -->
       <div class="row g-4 mb-4">
         <div class="col-md-3">
           <div class="card stat-card border-0 shadow-sm">
@@ -121,7 +129,6 @@
       </div>
 
       <div class="row g-4 mb-4">
-        <!-- GRÁFICO -->
         <div class="col-lg-8">
           <div class="card border-0 shadow-sm p-4">
             <div class="d-flex justify-content-between align-items-start mb-1">
@@ -153,7 +160,6 @@
           </div>
         </div>
 
-        <!-- BIOMAS -->
         <div class="col-lg-4">
           <div class="card border-0 shadow-sm p-4 h-100">
             <h6 class="fw-bold mb-3">Distribuição por bioma</h6>
@@ -171,37 +177,37 @@
       </div>
 
       <div class="row g-4">
-        <!-- FILA DE VALIDAÇÃO -->
         <div class="col-lg-8">
           <div class="card border-0 shadow-sm p-4">
             <div class="d-flex justify-content-between mb-3">
               <h6 class="fw-bold mb-0">Fila de validação</h6>
               <a href="javascript:void(0)" class="small text-success fw-bold">Ver todos <i class="bi bi-arrow-up-right"></i></a>
             </div>
-            <table class="table validation-table">
-              <thead>
-                <tr>
-                  <th>Projeto</th>
-                  <th>Cooperativa</th>
-                  <th>Área</th>
-                  <th>Status</th>
-                  <th></th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr *ngFor="let item of validationQueue()">
-                  <td class="fw-bold">{{ item.projectName }}</td>
-                  <td class="text-secondary">{{ item.cooperativeName }}</td>
-                  <td>{{ item.areaHectares | number }} ha</td>
-                  <td><span class="badge-status" [ngClass]="statusClass(item.status)">{{ statusLabel(item.status) }}</span></td>
-                  <td><a href="javascript:void(0)" class="text-success fw-bold small">Revisar</a></td>
-                </tr>
-              </tbody>
-            </table>
+            <div class="table-responsive">
+              <table class="table validation-table">
+                <thead>
+                  <tr>
+                    <th>Projeto</th>
+                    <th>Cooperativa</th>
+                    <th>Área</th>
+                    <th>Status</th>
+                    <th></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let item of validationQueue()">
+                    <td class="fw-bold">{{ item.projectName }}</td>
+                    <td class="text-secondary">{{ item.cooperativeName }}</td>
+                    <td>{{ item.areaHectares | number }} ha</td>
+                    <td><span class="badge-status" [ngClass]="statusClass(item.status)">{{ statusLabel(item.status) }}</span></td>
+                    <td><a href="javascript:void(0)" class="text-success fw-bold small">Revisar</a></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
 
-        <!-- ESG -->
         <div class="col-lg-4">
           <div class="card border-0 shadow-sm p-4 h-100">
             <h6 class="fw-bold mb-3">Indicadores ESG</h6>
@@ -224,7 +230,71 @@
       </div>
     </section>
 
-    <section *ngIf="activeMenu !== 'executive'" class="card border-0 shadow-sm p-5 text-center">
+    <!-- PRODUTORES -->
+    <section *ngIf="activeMenu === 'producers'">
+      <div class="card border-0 shadow-sm p-4">
+        <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-3">
+          <div>
+            <h6 class="fw-bold mb-0">Produtores cadastrados</h6>
+            <small class="text-secondary">{{ filteredProducers().length }} resultado(s)</small>
+          </div>
+
+          <div class="search-box search-box-full">
+            <i class="bi bi-search"></i>
+            <input
+              type="text"
+              placeholder="Buscar por nome, propriedade, bioma ou cooperativa..."
+              [(ngModel)]="searchTerm"
+              (ngModelChange)="onSearchChange($event)"
+            />
+          </div>
+        </div>
+
+        <div class="table-responsive">
+          <table class="table validation-table">
+            <thead>
+              <tr>
+                <th>Produtor</th>
+                <th>Propriedade</th>
+                <th>Cooperativa</th>
+                <th>Bioma</th>
+                <th>Estágio</th>
+                <th>Progresso</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let producer of filteredProducers()">
+                <td class="fw-bold">{{ producer.name }}</td>
+                <td>{{ producer.propertyName }}</td>
+                <td class="text-secondary">{{ producer.cooperativeName }}</td>
+                <td>{{ producer.biome }}</td>
+                <td>
+                  <span class="badge-status" [ngClass]="certificationBadgeClass(producer.certificationStage)">
+                    {{ producer.certificationStage }}
+                  </span>
+                </td>
+                <td style="width: 160px;">
+                  <div class="d-flex align-items-center gap-2">
+                    <div class="progress flex-grow-1" style="height: 6px;">
+                      <div class="progress-bar bar-green" [style.width.%]="producer.certificationProgressPercent"></div>
+                    </div>
+                    <small class="text-secondary">{{ producer.certificationProgressPercent }}%</small>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div *ngIf="filteredProducers().length === 0" class="text-center py-5">
+          <i class="bi bi-search fs-1 text-secondary mb-3"></i>
+          <p class="text-secondary mb-0">Nenhum produtor encontrado para "{{ searchTerm }}".</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Placeholder para seções ainda não detalhadas -->
+    <section *ngIf="activeMenu !== 'executive' && activeMenu !== 'producers'" class="card border-0 shadow-sm p-5 text-center">
       <i class="bi bi-tools fs-1 text-secondary mb-3"></i>
       <h5>Seção "{{ activeMenu }}" em construção</h5>
       <p class="text-secondary">Essa área será detalhada em uma próxima etapa do projeto.</p>

@@ -6,7 +6,7 @@ import { Producer } from '../models/producer.model';
 const MOCK_PRODUCERS: Producer[] = [
   {
     id: 'p1',
-    name: 'Joana',
+    name: 'Joana Ribeiro',
     propertyName: 'Fazenda Boa Esperança',
     location: 'Viçosa, MG · Zona da Mata, MG',
     cooperativeName: 'Cooperativa Vale Verde',
@@ -17,18 +17,14 @@ const MOCK_PRODUCERS: Producer[] = [
     certificationProgressPercent: 62,
     estimatedMonthsToComplete: 4,
     estimatedCarbonPotential: 1240,
-    propertyImageUrl: 'https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=1200&q=80',
+    propertyImageUrl: 'image/Casa_fazenda.jpg',
     documents: [
       { id: 'd1', name: 'CAR — Cadastro Ambiental Rural', status: 'aprovado' },
       { id: 'd2', name: 'Matrícula da propriedade', status: 'aprovado' },
       { id: 'd3', name: 'Termo de adesão', status: 'aprovado' },
       { id: 'd4', name: 'Laudo técnico', status: 'pendente' },
     ],
-    satellite: {
-      ndviAverage: 0.82,
-      vegetationCoverPercent: 94,
-      activeAlerts: 0,
-    },
+    satellite: { ndviAverage: 0.82, vegetationCoverPercent: 94, activeAlerts: 0 },
     timeline: [
       { order: 1, title: 'Elegibilidade', date: '12 mar 2026', status: 'completed' },
       { order: 2, title: 'Cadastro', date: '28 mar 2026', status: 'completed' },
@@ -45,6 +41,82 @@ const MOCK_PRODUCERS: Producer[] = [
       { id: 'a4', title: 'Estimativa atualizada', description: 'Potencial de crédito revisado para 1.240 tCO₂e.', timeAgo: 'há 3d' },
     ],
   },
+  {
+    id: 'p2',
+    name: 'João Almeida',
+    propertyName: 'Fazenda Vale do Rio Doce',
+    location: 'Governador Valadares, MG',
+    cooperativeName: 'Coop Rio Doce',
+    biome: 'Cerrado',
+    totalAreaHectares: 210,
+    eligibleAreaHectares: 175,
+    certificationStage: 'Monitoramento',
+    certificationProgressPercent: 78,
+    estimatedMonthsToComplete: 2,
+    estimatedCarbonPotential: 2100,
+    propertyImageUrl: 'image/paisagem_fazenda_agro.jpg',
+    documents: [],
+    satellite: { ndviAverage: 0.75, vegetationCoverPercent: 88, activeAlerts: 1 },
+    timeline: [],
+    activities: [],
+  },
+  {
+    id: 'p3',
+    name: 'Ana Cooperativada',
+    propertyName: 'Chácara Nova Aurora',
+    location: 'Petrópolis, RJ',
+    cooperativeName: 'Coop Terra Boa',
+    biome: 'Mata Atlântica',
+    totalAreaHectares: 34,
+    eligibleAreaHectares: 15,
+    certificationStage: 'Certificado',
+    certificationProgressPercent: 100,
+    estimatedMonthsToComplete: 0,
+    estimatedCarbonPotential: 145,
+    propertyImageUrl: 'image/imagem_vale_natureza.jpg',
+    documents: [],
+    satellite: { ndviAverage: 0.9, vegetationCoverPercent: 97, activeAlerts: 0 },
+    timeline: [],
+    activities: [],
+  },
+  {
+    id: 'p4',
+    name: 'Carlos Mendes',
+    propertyName: 'Sítio Cerrado Sustentável',
+    location: 'Barreiras, BA',
+    cooperativeName: 'AgroCerrado',
+    biome: 'Cerrado',
+    totalAreaHectares: 320,
+    eligibleAreaHectares: 240,
+    certificationStage: 'Cadastro',
+    certificationProgressPercent: 28,
+    estimatedMonthsToComplete: 9,
+    estimatedCarbonPotential: 3400,
+    propertyImageUrl: 'image/platacao_agro.jpg',
+    documents: [],
+    satellite: { ndviAverage: 0.68, vegetationCoverPercent: 80, activeAlerts: 2 },
+    timeline: [],
+    activities: [],
+  },
+  {
+    id: 'p5',
+    name: 'Fernanda Souza',
+    propertyName: 'Fazenda Mata Viva',
+    location: 'Ilhéus, BA',
+    cooperativeName: 'Coop Vale Verde',
+    biome: 'Mata Atlântica',
+    totalAreaHectares: 88,
+    eligibleAreaHectares: 60,
+    certificationStage: 'Projeto Coletivo',
+    certificationProgressPercent: 45,
+    estimatedMonthsToComplete: 6,
+    estimatedCarbonPotential: 610,
+    propertyImageUrl: 'image/agricultor_lavoura_agro.jpg',
+    documents: [],
+    satellite: { ndviAverage: 0.79, vegetationCoverPercent: 91, activeAlerts: 0 },
+    timeline: [],
+    activities: [],
+  },
 ];
 
 @Injectable({ providedIn: 'root' })
@@ -57,10 +129,12 @@ export class ProducerService {
   }
 
   getById(id: string): Observable<Producer | undefined> {
+    // Nota: usamos map() para extrair uma propriedade específica, que é o substituto
+    // moderno do operador `pluck` (removido a partir do RxJS 7 / Angular recente).
     return this.producers$.pipe(map((producers) => producers.find((p) => p.id === id)));
   }
 
-  // No mock, o produtor logado é sempre o primeiro registro
+  // No mock, o produtor logado (dashboard do produtor) é sempre o primeiro registro
   getCurrentProducer(): Observable<Producer> {
     return this.producers$.pipe(map((producers) => producers[0]));
   }
@@ -82,7 +156,8 @@ export class ProducerService {
               (p) =>
                 p.name.toLowerCase().includes(term) ||
                 p.propertyName.toLowerCase().includes(term) ||
-                p.biome.toLowerCase().includes(term)
+                p.biome.toLowerCase().includes(term) ||
+                p.cooperativeName.toLowerCase().includes(term)
             )
       )
     );

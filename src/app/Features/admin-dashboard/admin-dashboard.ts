@@ -1,8 +1,12 @@
-import { Component, inject, OnInit, signal } from '@angular/core';
+import { Component, DestroyRef, inject, OnInit, signal } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '../../core/services/auth.service';
 import { AdminService } from '../../core/services/admin.service';
+import { ProducerService } from '../../core/services/producer.service';
+import { Producer } from '../../core/models/producer.model';
 import {
   BiomeDistribution,
   CarbonVolumePoint,
@@ -14,17 +18,20 @@ import {
 
 @Component({
   selector: 'app-admin-dashboard',
-  imports: [CommonModule],
+  imports: [CommonModule, FormsModule],
   templateUrl: './admin-dashboard.html',
   styleUrl: './admin-dashboard.css',
 })
 export class AdminDashboard implements OnInit {
   private authService = inject(AuthService);
   private adminService = inject(AdminService);
+  private producerService = inject(ProducerService);
   private router = inject(Router);
+  private destroyRef = inject(DestroyRef);
 
   currentUser = this.authService.currentUser;
   activeMenu = 'executive';
+  sidebarOpen = signal(false);
 
   stats = signal<ExecutiveStats | null>(null);
   volumePoints = signal<CarbonVolumePoint[]>([]);
@@ -35,6 +42,11 @@ export class AdminDashboard implements OnInit {
 
   selectedPeriod: '12m' | '6m' | '3m' = '12m';
 
+  // --- Tela de Produtores ---
+  searchTerm = ''; // usado com [(ngModel)] no input de busca
+  producersLoading = signal(true);
+  filteredProducers = signal<Producer[]>([]);
+
   ngOnInit(): void {
     this.adminService.getExecutiveStats().subscribe((s) => this.stats.set(s));
     this.adminService.getBiomeDistribution().subscribe((b) => this.biomes.set(b));
@@ -42,6 +54,24 @@ export class AdminDashboard implements OnInit {
     this.adminService.getEsgIndicators().subscribe((e) => this.esgIndicators.set(e));
     this.consolidatedScore = this.adminService.getConsolidatedScore();
     this.loadVolume('12m');
+
+    // Pipeline de RxJS já definido no service (debounceTime + distinctUntilChanged + filter + map)
+    this.producerService
+      .getFilteredProducers()
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((producers) => {
+        this.filteredProducers.set(producers);
+        this.producersLoading.set(false);
+      });
+  }
+
+  toggleSidebar(): void {
+    this.sidebarOpen.update((v) => !v);
+  }
+
+  // Disparado pelo (ngModelChange) do campo de busca
+  onSearchChange(term: string): void {
+    this.producerService.setSearchTerm(term);
   }
 
   loadVolume(period: '12m' | '6m' | '3m'): void {
@@ -51,6 +81,7 @@ export class AdminDashboard implements OnInit {
 
   setMenu(menu: string): void {
     this.activeMenu = menu;
+    this.sidebarOpen.set(false);
   }
 
   logout(): void {
@@ -58,20 +89,17 @@ export class AdminDashboard implements OnInit {
     this.router.navigate(['/login']);
   }
 
-  // Gera os pontos do SVG a partir dos valores (normalizado numa viewBox 0-100 x 0-100)
   getChartPoints(): string {
     const points = this.volumePoints();
     if (!points.length) return '';
-
     const max = Math.max(...points.map((p) => p.value));
     const min = Math.min(...points.map((p) => p.value));
     const range = max - min || 1;
     const stepX = 100 / (points.length - 1 || 1);
-
     return points
       .map((p, i) => {
         const x = i * stepX;
-        const y = 100 - ((p.value - min) / range) * 90 - 5; // 5-95% de margem vertical
+        const y = 100 - ((p.value - min) / range) * 90 - 5;
         return `${x},${y}`;
       })
       .join(' ');
@@ -86,9 +114,9 @@ export class AdminDashboard implements OnInit {
   statusLabel(status: ValidationStatus): string {
     const map: Record<ValidationStatus, string> = {
       'em-analise': 'Em análise',
-      'monitoramento': 'Monitoramento',
+      monitoramento: 'Monitoramento',
       'pendente-docs': 'Pendente docs',
-      'certificado': 'Certificado',
+      certificado: 'Certificado',
     };
     return map[status];
   }
@@ -96,10 +124,16 @@ export class AdminDashboard implements OnInit {
   statusClass(status: ValidationStatus): string {
     const map: Record<ValidationStatus, string> = {
       'em-analise': 'badge-warning',
-      'monitoramento': 'badge-success',
+      monitoramento: 'badge-success',
       'pendente-docs': 'badge-danger',
-      'certificado': 'badge-success',
+      certificado: 'badge-success',
     };
     return map[status];
+  }
+
+  certificationBadgeClass(stage: string): string {
+    if (stage === 'Certificado') return 'badge-success';
+    if (stage === 'Cadastro' || stage === 'Elegibilidade') return 'badge-warning';
+    return 'badge-info';
   }
 }

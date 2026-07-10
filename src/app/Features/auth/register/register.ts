@@ -16,6 +16,8 @@ export class Register {
   private authService = inject(AuthService);
   private router = inject(Router);
 
+  backgroundImageUrl = 'image/trator_agro.jpg';
+
   loading = signal(false);
   errorMessage = signal<string | null>(null);
   showTermsModal = signal(false);
