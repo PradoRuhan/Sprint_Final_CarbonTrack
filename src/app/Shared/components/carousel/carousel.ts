@@ -1,5 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef, AfterViewInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
+// @ts-ignore
+import { Carousel as BootstrapCarousel } from 'bootstrap';
 
 interface CarouselSlide {
   id: number;
@@ -15,7 +17,27 @@ interface CarouselSlide {
   templateUrl: './carousel.html',
   styleUrl: './carousel.css',
 })
-export class Carousel {
+export class Carousel implements AfterViewInit, OnDestroy {
+  private carouselInstance?: BootstrapCarousel;
+
+  constructor(private elementRef: ElementRef<HTMLElement>) {}
+
+  ngAfterViewInit(): void {
+    const el = this.elementRef.nativeElement.querySelector('#heroCarousel');
+    if (el) {
+      this.carouselInstance = new BootstrapCarousel(el, {
+        interval: 5000,
+        ride: 'carousel',
+        pause: false,
+        wrap: true,
+      });
+    }
+  }
+
+  ngOnDestroy(): void {
+    this.carouselInstance?.dispose();
+  }
+
   slides: CarouselSlide[] = [
     {
       id: 0,

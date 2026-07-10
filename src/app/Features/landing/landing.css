@@ -234,13 +234,35 @@
   justify-content: center;
 }
 
-.cta-section {
-  background: linear-gradient(135deg, #198754, #0f5132);
+.cta-card-v2 {
+  border-radius: 28px;
+  background-size: cover;
+  background-position: center;
 }
 
+.text-white-75 { color: rgba(255, 255, 255, 0.85); }
 .empty-result-state {
   background: rgba(255, 255, 255, 0.06);
   border: 1px dashed rgba(255, 255, 255, 0.25);
   border-radius: 20px;
   min-height: 320px;
+}
+
+.testimonial-card { border-radius: 18px; }
+
+.stars { color: #f59e0b; font-size: 0.85rem; }
+
+.testimonial-avatar {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background-color: #14532d;
+  background-size: cover;
+  background-position: center;
+  color: #fff;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
 }

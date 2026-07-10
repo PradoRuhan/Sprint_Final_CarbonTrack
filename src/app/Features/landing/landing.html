@@ -274,14 +274,28 @@
 <!-- DEPOIMENTOS -->
 <section id="depoimentos" class="py-5 bg-light">
   <div class="container">
-    <h2 class="text-center fw-bold mb-5">Quem já usa o CarbonTrack</h2>
+    <div class="text-center mb-5">
+      <span class="section-badge">🌱 Depoimentos</span>
+      <h2 class="fw-bold display-6 mt-3">Histórias reais, impacto verificado</h2>
+    </div>
 
     <div class="row g-4">
       <div class="col-md-4" *ngFor="let t of testimonials">
-        <div class="card h-100 border-0 shadow-sm p-4">
-          <p class="fst-italic text-secondary">"{{ t.quote }}"</p>
-          <h6 class="fw-bold mb-0 mt-3">{{ t.name }}</h6>
-          <small class="text-success">{{ t.role }}</small>
+        <div class="card h-100 border-0 shadow-sm p-4 testimonial-card">
+          <div class="stars mb-3">
+            <i class="bi bi-star-fill" *ngFor="let s of [1,2,3,4,5]"></i>
+          </div>
+          <p class="text-secondary mb-4">"{{ t.quote }}"</p>
+          <hr />
+          <div class="d-flex align-items-center gap-3 mt-2">
+            <div class="testimonial-avatar" [style.background-image]="t.avatarImageUrl ? 'url(' + t.avatarImageUrl + ')' : null">
+              <span *ngIf="!t.avatarImageUrl">{{ t.avatarInitial }}</span>
+            </div>
+            <div>
+              <h6 class="fw-bold mb-0">{{ t.name }}</h6>
+              <small class="text-success">{{ t.role }}</small>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -289,12 +303,24 @@
 </section>
 
 <!-- CTA FINAL -->
-<section id="contato" class="py-5 text-center cta-section text-white">
+<section id="contato" class="py-5">
   <div class="container">
-    <h2 class="fw-bold mb-3">Pronto para transformar seu impacto ambiental em valor?</h2>
-    <p class="lead mb-4">Cadastre-se e faça parte da rede CarbonTrack.</p>
-    <a routerLink="/register" class="btn btn-light btn-lg rounded-pill px-4">
-      Criar Conta Gratuita
-    </a>
+    <div
+      class="cta-card-v2 text-white p-5"
+      [style.background-image]="'linear-gradient(120deg, rgba(6,78,59,0.8), rgba(4,30,20,0.6)), url(' + ctaImageUrl + ')'"
+    >
+      <div class="row align-items-center">
+        <div class="col-lg-8">
+          <h2 class="fw-bold mb-2">Pronto para transformar impacto em valor?</h2>
+          <p class="mb-4 text-white-75">
+            Junte-se a produtores, cooperativas e empresas que já estão construindo o futuro sustentável do agronegócio.
+          </p>
+          <div class="d-flex gap-3 flex-wrap">
+            <a routerLink="/register" class="btn btn-light rounded-pill px-4 fw-bold">Crie sua conta</a>
+            <a routerLink="/login" class="btn btn-outline-light rounded-pill px-4">Faça login</a>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </section>

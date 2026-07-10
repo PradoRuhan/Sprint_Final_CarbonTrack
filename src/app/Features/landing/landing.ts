@@ -24,6 +24,8 @@ interface Testimonial {
   name: string;
   role: string;
   quote: string;
+  avatarInitial: string;
+  avatarImageUrl?: string;
 }
 
 interface BiomeFactor {
@@ -51,7 +53,8 @@ export class Landing implements OnInit {
   private fb = inject(FormBuilder);
   private destroyRef = inject(DestroyRef);
 
-  heroImageUrl = 'image/platio_agro_plantas.jpg';
+  heroImageUrl = 'image/imagem_vale_natureza.jpg';
+  ctaImageUrl = 'image/floresta_visao.jpg';
 
   heroStats = [
     {value: '2.4M', label: 'ha monitorados'},
@@ -86,9 +89,25 @@ export class Landing implements OnInit {
   ];
 
   testimonials: Testimonial[] = [
-    { name: 'Maria Produtora', role: 'Produtora Rural — Cerrado', quote: 'Antes eu nem sabia por onde começar. Com o projeto coletivo, consegui participar do mercado de carbono sem precisar entender toda a burocracia sozinha.' },
-    { name: 'Cooperativa Vale Verde', role: 'Cooperativa Agrícola', quote: 'Conseguimos gerenciar centenas de propriedades em um único painel, o que antes era feito manualmente em planilhas separadas.' },
-    { name: 'Consultoria Ambiental XYZ', role: 'Consultoria Ambiental', quote: 'A organização documental e o acompanhamento das etapas técnicas tornaram nosso trabalho de validação muito mais eficiente.' },
+    {
+      name: 'Joana Ribeiro',
+      role: 'Produtora · Zona da Mata, MG',
+      quote: 'Consegui certificar minha propriedade sem burocracia. A cooperativa cuidou de tudo e hoje minha família tem uma nova fonte de renda.',
+      avatarInitial: 'J',
+      avatarImageUrl: 'image/agricultor_lavoura_agro.jpg',
+    },
+    {
+      name: 'Carlos Mendes',
+      role: 'Diretor · Cooperativa Vale Verde',
+      quote: 'O CarbonTrack transformou como coordenamos nossos projetos coletivos. Monitoramento e certificação em uma única plataforma.',
+      avatarInitial: 'C',
+    },
+    {
+      name: 'Marina Costa',
+      role: 'ESG Manager · GreenCorp',
+      quote: 'Rastreabilidade completa dos créditos que compramos. Nunca vimos esse nível de transparência no mercado voluntário.',
+      avatarInitial: 'M',
+    },
   ];
 
   biomeFactors: BiomeFactor[] = [

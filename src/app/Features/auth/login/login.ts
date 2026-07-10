@@ -25,8 +25,14 @@ export class Login {
     email: ['', [Validators.required, Validators.email]],
     password: ['', [Validators.required, Validators.minLength(6)]],
     rememberMe: [false],
-    acceptedTerms: [false, [Validators.requiredTrue]],
+    acceptedTerms: [false],
   });
+
+  showTermsModal = signal(false);
+
+  toggleTermsModal(): void {
+    this.showTermsModal.update((v) => !v);
+  }
 
   get email() { return this.form.controls.email; }
   get password() { return this.form.controls.password; }
@@ -39,15 +45,10 @@ export class Login {
   submit(): void {
     if (this.form.invalid) {
       this.form.markAllAsTouched();
-
-      if (this.acceptedTerms.invalid) {
-        this.errorMessage.set('Você precisa aceitar os Termos e a Política de Privacidade (LGPD) para continuar.');
-      } else {
-        this.errorMessage.set('Verifique os campos destacados e tente novamente.');
-      }
+      this.errorMessage.set('Verifique os campos destacados e tente novamente.');
       return;
     }
-
+    
     this.loading.set(true);
     this.errorMessage.set(null);
 

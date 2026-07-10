@@ -4,13 +4,9 @@
 >  <div class="auth-card">
     <div class="text-center mb-4">
       
-      <div class="auth-icon mb-3">
-        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M12 21V11" stroke="white" stroke-width="1.7" stroke-linecap="round"/>
-          <path d="M12 12C12 8 9 6 6 6C6 9 8 12 12 12Z" fill="white"/>
-          <path d="M12 9C12 5.5 14.8 3.5 18 3.5C18 6.8 15.5 9 12 9Z" fill="white"/>
-        </svg>
-      </div>
+    <div class="auth-icon mb-3">
+        <i class="bi bi-shield-lock-fill" style="font-size: 1.4rem; color: #fff;"></i>
+    </div>
 
       <h3 class="fw-bold text-white">Bem-vindo de volta</h3>
       <p class="text-white-50 mb-0">Acesse sua conta para gerenciar seus projetos de carbono.</p>
@@ -82,11 +78,14 @@
       </div>
 
       <div class="form-check mb-4">
-        <input type="checkbox" class="form-check-input" id="acceptedTermsLogin" formControlName="acceptedTerms" />
-        <label class="form-check-label small text-white-50" for="acceptedTermsLogin">
-          Li e concordo com os Termos e a Política de Privacidade (LGPD).
-        </label>
-      </div>
+      <input type="checkbox" class="form-check-input" id="acceptedTermsLogin" formControlName="acceptedTerms" />
+      <label class="form-check-label small text-white-50" for="acceptedTermsLogin">
+        Li e concordo com os
+        <a href="javascript:void(0)" (click)="toggleTermsModal()" class="text-white fw-bold text-decoration-underline">
+          Termos e a Política de Privacidade (LGPD)
+        </a>.
+      </label>
+    </div>
 
       <button type="submit" class="btn btn-light w-100 rounded-pill py-2 fw-bold" [disabled]="loading()">
         <span *ngIf="loading()" class="spinner-border spinner-border-sm me-2"></span>
@@ -100,3 +99,28 @@
     </p>
   </div>
 </section>
+
+<!-- Modal de Termos LGPD -->
+<div class="terms-overlay" *ngIf="showTermsModal()" (click)="toggleTermsModal()">
+  <div class="terms-modal" (click)="$event.stopPropagation()">
+    <h5 class="fw-bold mb-3">Termos de Uso e Política de Privacidade (LGPD)</h5>
+    <div class="terms-content small">
+      <p>
+        Este é um projeto acadêmico desenvolvido para fins educacionais no âmbito do
+        programa Ford Enter. Nenhum dado real é processado, armazenado em servidores
+        externos ou compartilhado com terceiros.
+      </p>
+      <p>
+        Em conformidade com a Lei Geral de Proteção de Dados (LGPD - Lei nº 13.709/2018),
+        ao utilizar esta plataforma de demonstração, você concorda que:
+      </p>
+      <ul>
+        <li>Os dados informados são utilizados apenas para fins de teste e demonstração.</li>
+        <li>Nenhuma informação pessoal é enviada a servidores de produção reais.</li>
+        <li>Você pode solicitar a exclusão dos seus dados a qualquer momento.</li>
+        <li>Este protótipo não realiza cobranças nem coleta dados sensíveis.</li>
+      </ul>
+    </div>
+    <button class="btn btn-success rounded-pill w-100 mt-3" (click)="toggleTermsModal()">Entendi</button>
+  </div>
+</div>
