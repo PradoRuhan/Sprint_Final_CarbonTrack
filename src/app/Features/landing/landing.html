@@ -92,9 +92,8 @@
       <div class="col-md-6 col-lg-4" *ngFor="let step of steps">
         <div class="card h-100 border-0 shadow-sm p-4 step-card-v2">
           <div class="d-flex align-items-start gap-3">
-            <div class="step-icon-circle">
-              <i class="bi" [ngClass]="step.icon"></i>
-            </div>
+            <div class="step-icon-circle" [innerHTML]="stepIcons[step.order - 1]">
+              </div>
             <div>
               <small class="step-tag">ETAPA {{ step.order < 10 ? '0' + step.order : step.order }}</small>
               <h6 class="fw-bold mt-1 mb-2">{{ step.title }}</h6>

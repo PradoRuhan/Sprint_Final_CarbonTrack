@@ -55,7 +55,6 @@ export class AdminDashboard implements OnInit {
     this.consolidatedScore = this.adminService.getConsolidatedScore();
     this.loadVolume('12m');
 
-    // Pipeline de RxJS já definido no service (debounceTime + distinctUntilChanged + filter + map)
     this.producerService
       .getFilteredProducers()
       .pipe(takeUntilDestroyed(this.destroyRef))
@@ -69,7 +68,6 @@ export class AdminDashboard implements OnInit {
     this.sidebarOpen.update((v) => !v);
   }
 
-  // Disparado pelo (ngModelChange) do campo de busca
   onSearchChange(term: string): void {
     this.producerService.setSearchTerm(term);
   }

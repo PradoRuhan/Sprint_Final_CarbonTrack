@@ -256,45 +256,73 @@
   display: none;
 }
 
-@media (max-width: 992px) {
-  .mobile-menu-btn {
-    display: inline-flex;
-  }
+.sidebar-brand {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 2rem;
+  padding: 0 0.5rem;
+}
 
-  .sidebar {
-    position: fixed;
-    left: -280px;
-    top: 0;
-    height: 100vh;
-    width: 260px;
-    z-index: 1045;
-    transition: left 0.25s ease;
-    box-shadow: 4px 0 20px rgba(0, 0, 0, 0.1);
-  }
+.sidebar-close-btn {
+  display: none;
+  background: transparent;
+  border: none;
+  font-size: 1.1rem;
+  color: #888;
+}
 
-  .sidebar.sidebar-open {
-    left: 0;
-  }
+.mobile-menu-btn {
+  background: #fff;
+  border: 1px solid #e5e5e5;
+  border-radius: 10px;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
 
-  .sidebar-overlay.ng-star-inserted {
-    display: block;
-    position: fixed;
-    inset: 0;
-    background: rgba(0, 0, 0, 0.5);
-    z-index: 1040;
-  }
+.sidebar-overlay {
+  display: none;
+}
 
-  .dashboard-main {
-    max-width: 100%;
-    padding: 1.25rem;
-  }
+/* Sidebar SEMPRE inicia fechada e é controlada pelo botão, em qualquer tamanho de tela */
+.sidebar {
+  position: fixed;
+  left: -280px;
+  top: 0;
+  height: 100vh;
+  width: 260px;
+  z-index: 1045;
+  transition: left 0.25s ease;
+  box-shadow: 4px 0 20px rgba(0, 0, 0, 0.1);
+}
 
-  .dashboard-topbar {
-    flex-wrap: wrap;
-    gap: 1rem;
-  }
+.sidebar.sidebar-open {
+  left: 0;
+}
 
-  .search-box {
-    display: none;
-  }
+.sidebar.sidebar-open .sidebar-close-btn {
+  display: block;
+}
+
+.sidebar-overlay.ng-star-inserted {
+  display: block;
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 1040;
+}
+
+.dashboard-main {
+  max-width: 100%;
+  padding: 2rem;
+}
+
+@media (max-width: 768px) {
+  .dashboard-main { padding: 1.25rem; }
+  .dashboard-topbar { flex-wrap: wrap; gap: 1rem; }
+  .search-box { display: none; }
 }

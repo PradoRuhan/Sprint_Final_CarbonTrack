@@ -1,16 +1,23 @@
 <div class="dashboard-layout" *ngIf="producer$ | async as producer">
 
-  <!-- OVERLAY MOBILE -->
+<div class="dashboard-layout" *ngIf="producer$ | async as producer">
+
+  <!-- OVERLAY -->
   <div class="sidebar-overlay" *ngIf="sidebarOpen()" (click)="toggleSidebar()"></div>
 
   <!-- SIDEBAR -->
   <aside class="sidebar" [class.sidebar-open]="sidebarOpen()">
     <div class="sidebar-brand">
-      <span class="brand-icon">🌱</span>
-      <div>
-        <div class="fw-bold">CarbonTrack</div>
-        <small class="text-uppercase text-secondary">Produtor</small>
+      <div class="d-flex align-items-center gap-2">
+        <span class="brand-icon">🌱</span>
+        <div>
+          <div class="fw-bold">CarbonTrack</div>
+          <small class="text-uppercase text-secondary">Produtor</small>
+        </div>
       </div>
+      <button class="sidebar-close-btn" (click)="toggleSidebar()">
+        <i class="bi bi-x-lg"></i>
+      </button>
     </div>
 
     <nav class="sidebar-nav">
@@ -51,18 +58,20 @@
 
     <!-- TOPBAR -->
     <header class="dashboard-topbar">
-      <div>
-        <h4 class="fw-bold mb-0">Olá, {{ producer.name }} 👋</h4>
-        <small class="text-secondary">{{ producer.propertyName }} · {{ producer.location }}</small>
-      </div>
       <div class="d-flex align-items-center gap-3">
         <button class="mobile-menu-btn" (click)="toggleSidebar()">
           <i class="bi bi-list"></i>
         </button>
+        <div>
+          <h4 class="fw-bold mb-0">Olá, {{ producer.name }} 👋</h4>
+          <small class="text-secondary">{{ producer.propertyName }} · {{ producer.location }}</small>
+        </div>
+      </div>
+      <div class="d-flex align-items-center gap-3">
         <div class="search-box">
           <i class="bi bi-search"></i>
           <input type="text" placeholder="Buscar..." />
-        </div>        
+        </div>
         <button class="icon-btn position-relative">
           <i class="bi bi-bell"></i>
           <span class="notif-dot"></span>

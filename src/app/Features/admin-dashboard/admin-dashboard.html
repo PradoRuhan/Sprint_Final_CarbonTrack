@@ -1,16 +1,21 @@
 <div class="dashboard-layout">
 
-  <!-- OVERLAY MOBILE -->
+  <!-- OVERLAY -->
   <div class="sidebar-overlay" *ngIf="sidebarOpen()" (click)="toggleSidebar()"></div>
 
   <!-- SIDEBAR -->
   <aside class="sidebar" [class.sidebar-open]="sidebarOpen()">
     <div class="sidebar-brand">
-      <span class="brand-icon">🌱</span>
-      <div>
-        <div class="fw-bold">CarbonTrack</div>
-        <small class="text-uppercase text-secondary">Admin</small>
+      <div class="d-flex align-items-center gap-2">
+        <span class="brand-icon">🌱</span>
+        <div>
+          <div class="fw-bold">CarbonTrack</div>
+          <small class="text-uppercase text-secondary">Admin</small>
+        </div>
       </div>
+      <button class="sidebar-close-btn" (click)="toggleSidebar()">
+        <i class="bi bi-x-lg"></i>
+      </button>
     </div>
 
     <nav class="sidebar-nav">
@@ -43,7 +48,6 @@
       <small class="d-block mb-3">Suporte disponível em horário comercial</small>
       <button class="btn btn-light btn-sm w-100 rounded-pill fw-bold">Abrir chat</button>
     </div>
-
   </aside>
 
   <!-- MAIN -->

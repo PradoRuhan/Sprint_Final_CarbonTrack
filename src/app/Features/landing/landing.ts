@@ -1,4 +1,5 @@
 import { Component, DestroyRef, inject, OnInit, signal } from '@angular/core';
+import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
@@ -52,7 +53,24 @@ interface ProjectionPoint {
 export class Landing implements OnInit {
   private fb = inject(FormBuilder);
   private destroyRef = inject(DestroyRef);
+  private sanitizer = inject(DomSanitizer);
 
+  private svgIcons: string[] = [
+    // 1 - Diagnóstico (mapa/pin)
+    `<svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M12 21s7-6.5 7-12a7 7 0 10-14 0c0 5.5 7 12 7 12z" stroke="#14532d" stroke-width="1.7"/><circle cx="12" cy="9" r="2.3" stroke="#14532d" stroke-width="1.7"/></svg>`,
+    // 2 - Agrupamento (pessoas)
+    `<svg width="20" height="20" viewBox="0 0 24 24" fill="none"><circle cx="8" cy="8" r="3" stroke="#14532d" stroke-width="1.7"/><circle cx="17" cy="9" r="2.4" stroke="#14532d" stroke-width="1.7"/><path d="M2.5 20c.6-3.6 3-5.5 5.5-5.5s4.9 1.9 5.5 5.5" stroke="#14532d" stroke-width="1.7" stroke-linecap="round"/><path d="M14.5 20c.4-2.6 1.8-4.2 3.7-4.2s3.3 1.6 3.7 4.2" stroke="#14532d" stroke-width="1.7" stroke-linecap="round"/></svg>`,
+    // 3 - Validação (check)
+    `<svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M4 4h13l3 3v13H4V4z" stroke="#14532d" stroke-width="1.7" stroke-linejoin="round"/><path d="M8 12l2.5 2.5L16 9" stroke="#14532d" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>`,
+    // 4 - Monitoramento (pulso)
+    `<svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M2 12h4l2-7 4 14 3-9 2 2h5" stroke="#14532d" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>`,
+    // 5 - Certificação (escudo)
+    `<svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M12 3l8 3.5v5.5c0 5-3.4 8.6-8 9.7-4.6-1.1-8-4.7-8-9.7V6.5L12 3z" stroke="#14532d" stroke-width="1.7" stroke-linejoin="round"/><path d="M9 12l2 2 4-4.5" stroke="#14532d" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>`,
+    // 6 - Comercialização (raio)
+    `<svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M13 2L4 14h6l-1 8 10-14h-6l0-6z" stroke="#14532d" stroke-width="1.5" stroke-linejoin="round" fill="#14532d" fill-opacity="0.08"/></svg>`,
+  ];
+
+  stepIcons: SafeHtml[] = this.svgIcons.map((svg) => this.sanitizer.bypassSecurityTrustHtml(svg));
   heroImageUrl = 'image/imagem_vale_natureza.jpg';
   ctaImageUrl = 'image/floresta_visao.jpg';
 
