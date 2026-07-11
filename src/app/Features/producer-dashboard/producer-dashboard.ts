@@ -1,5 +1,6 @@
 import { Component, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { RouterLink } from '@angular/router';
 import { Router } from '@angular/router';
 import { AuthService } from '../../core/services/auth.service';
 import { ProducerService } from '../../core/services/producer.service';
@@ -8,7 +9,7 @@ import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-producer-dashboard',
-  imports: [CommonModule],
+  imports: [CommonModule, RouterLink],
   templateUrl: './producer-dashboard.html',
   styleUrl: './producer-dashboard.css',
 })

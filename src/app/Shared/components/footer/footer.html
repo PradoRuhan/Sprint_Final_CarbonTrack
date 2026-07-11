@@ -1,33 +1,46 @@
-<footer class="bg-dark text-light pt-5 pb-4 mt-auto">
+<footer class="app-footer pt-5 pb-4 mt-auto">
   <div class="container">
-    <div class="row g-4">
+    <div class="row g-4 text-center text-md-start">
       <div class="col-md-4">
-        <h5 class="fw-bold text-success">🌱 CarbonTrack</h5>
-        <p class="text-secondary small">
+        <div class="d-flex align-items-center gap-2 mb-3 justify-content-center justify-content-md-start">
+          <img src="image/carbontrack_icone.jpg" alt="CarbonTrack" class="footer-logo-img" />
+          <h5 class="fw-bold mb-0 footer-brand-text">CarbonTrack</h5>
+        </div>
+        <p class="footer-text small">
           Plataforma de inteligência climática que conecta produtores,
           cooperativas e empresas ao mercado de carbono.
         </p>
       </div>
 
-      <div class="col-md-4">
-        <h6 class="fw-bold">Navegação</h6>
-        <ul class="list-unstyled small">
-          <li><a routerLink="/" class="text-secondary text-decoration-none">Início</a></li>
-          <li><a href="#sobre" class="text-secondary text-decoration-none">Sobre</a></li>
-          <li><a href="#esg" class="text-secondary text-decoration-none">ESG</a></li>
+      <div class="col-md-3">
+        <h6 class="fw-bold footer-heading mb-3">Navegação</h6>
+        <ul class="list-unstyled small footer-links">
+          <li><a routerLink="/">Início</a></li>
+          <li><a href="#como-funciona">Como Funciona</a></li>
+          <li><a href="#esg">ESG</a></li>
         </ul>
       </div>
 
-      <div class="col-md-4">
-        <h6 class="fw-bold">Contato</h6>
-        <p class="text-secondary small mb-1">contato&#64;carbontrack.com</p>
-        <p class="text-secondary small">Projeto acadêmico — Ford Enter</p>
+      <div class="col-md-3">
+        <h6 class="fw-bold footer-heading mb-3">Contato</h6>
+        <ul class="list-unstyled small footer-links">
+          <li>contato&#64;carbontrack.com</li>
+          <li>Projeto acadêmico — Ford Enter</li>
+        </ul>
+      </div>
+
+      <div class="col-md-2">
+        <h6 class="fw-bold footer-heading mb-3">Legal</h6>
+        <ul class="list-unstyled small footer-links">
+          <li><a href="javascript:void(0)">Termos de Uso</a></li>
+          <li><a href="javascript:void(0)">Privacidade (LGPD)</a></li>
+        </ul>
       </div>
     </div>
 
-    <hr class="border-secondary my-4" />
+    <hr class="footer-divider my-4" />
 
-    <p class="text-center text-secondary small mb-0">
+    <p class="text-center footer-text small mb-0">
       &copy; {{ currentYear }} CarbonTrack. Projeto acadêmico sem fins comerciais.
     </p>
   </div>

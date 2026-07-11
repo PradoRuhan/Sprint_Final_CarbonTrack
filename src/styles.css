@@ -1,3 +1,34 @@
+:root {
+  --brand-dark: #123c2b;
+  --brand-dark-light: #14532d;
+  --brand-mint: #5eead4;
+  --brand-mint-soft: #d1fae5;
+}
+
+/* Alinha os componentes verdes do Bootstrap com a identidade da marca */
+.btn-success {
+  background-color: var(--brand-dark) !important;
+  border-color: var(--brand-dark) !important;
+}
+
+.btn-success:hover {
+  background-color: var(--brand-dark-light) !important;
+  border-color: var(--brand-dark-light) !important;
+}
+
+.btn-outline-success {
+  color: var(--brand-dark) !important;
+  border-color: var(--brand-dark) !important;
+}
+
+.btn-outline-success:hover {
+  background-color: var(--brand-dark) !important;
+  color: #fff !important;
+}
+
+.text-success { color: var(--brand-dark) !important; }
+.bg-success { background-color: var(--brand-dark) !important; }
+
 * {
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
 }

@@ -1,0 +1,46 @@
+.app-footer {
+  background: linear-gradient(180deg, #14532d, #3b2617);
+}
+
+.footer-brand-text {
+  color: var(--brand-mint);
+}
+
+.footer-heading {
+  color: #f2e9df;
+}
+
+.footer-text {
+  color: rgba(242, 233, 223, 0.65);
+}
+
+.footer-links {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.footer-links a,
+.footer-links li {
+  color: rgba(242, 233, 223, 0.65);
+  text-decoration: none;
+}
+
+.footer-links a:hover {
+  color: var(--brand-mint);
+}
+
+.footer-divider {
+  border-color: rgba(242, 233, 223, 0.15);
+}
+
+.footer-logo-img {
+  width: 38px;
+  height: 38px;
+  border-radius: 9px;
+  object-fit: contain;
+}
+
+@media (max-width: 767px) {
+  .footer-heading { margin-top: 0.5rem; }
+}
