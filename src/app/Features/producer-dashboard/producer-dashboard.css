@@ -2,6 +2,9 @@
   display: flex;
   min-height: 100vh;
   background: #f6f8f7;
+  width: 100%;
+  overflow-x: hidden;
+
 }
 
 .sidebar-brand {
@@ -325,8 +328,10 @@
 
 .dashboard-main {
   flex: 1;
-  max-width: 100%;
+  width: 100%;
+  min-width: 0;
   padding: 2rem;
+  box-sizing: border-box;
 }
 
 @media (max-width: 768px) {
