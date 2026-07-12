@@ -9,7 +9,7 @@ const STORAGE_KEY = 'carbontrack_user';
 const MOCK_USERS: (User & { password: string })[] = [
   {
     id: '1',
-    name: 'Maria Produtora',
+    name: 'Ruhan Produtor',
     email: 'produtor@carbontrack.com',
     password: '123456',
     role: 'producer',

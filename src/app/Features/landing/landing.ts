@@ -135,20 +135,20 @@ esgCards: EsgCard[] = [
   ];
   testimonials: Testimonial[] = [
     {
-      name: 'Joana Ribeiro',
-      role: 'Produtora · Zona da Mata, MG',
+      name: 'Aurino Cardoso',
+      role: 'Produtor · Gov. Mangabeira, BA',
       quote: 'Consegui certificar minha propriedade sem burocracia. A cooperativa cuidou de tudo e hoje minha família tem uma nova fonte de renda.',
-      avatarInitial: 'J',
+      avatarInitial: 'A',
       avatarImageUrl: 'image/agricultor_lavoura_agro.jpg',
     },
     {
-      name: 'Carlos Mendes',
+      name: 'Antônio Prado',
       role: 'Diretor · Cooperativa Vale Verde',
       quote: 'O CarbonTrack transformou como coordenamos nossos projetos coletivos. Monitoramento e certificação em uma única plataforma.',
-      avatarInitial: 'C',
+      avatarInitial: 'A',
     },
     {
-      name: 'Marina Costa',
+      name: 'Maria P. Cardoso',
       role: 'ESG Manager · GreenCorp',
       quote: 'Rastreabilidade completa dos créditos que compramos. Nunca vimos esse nível de transparência no mercado voluntário.',
       avatarInitial: 'M',

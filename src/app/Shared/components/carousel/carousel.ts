@@ -38,9 +38,9 @@ export class Carousel implements AfterViewInit, OnDestroy {
     this.carouselEl = this.elementRef.nativeElement.querySelector('#heroCarousel');
     if (this.carouselEl) {
       this.carouselInstance = new BootstrapCarousel(this.carouselEl, {
-        interval: 7000,
+        interval: 5000,
         ride: 'carousel',
-        pause: false, // controlamos o pause manualmente via mouseenter/mouseleave
+        pause: false, // controlar o pause manualmente via mouseenter/mouseleave
         wrap: true,
       });
     }
@@ -63,7 +63,7 @@ export class Carousel implements AfterViewInit, OnDestroy {
       badge: 'Mercado de Carbono',
       title: 'O que são créditos de carbono?',
       description: 'Cada crédito representa uma tonelada de CO₂ evitada, reduzida ou removida da atmosfera — um ativo financeiro real com impacto ambiental verificado.',
-      imageUrl: 'image/imagem_vale_natureza.jpg',
+      imageUrl: 'image/platio_agro_plantas.jpg',
       imagePosition: 'left',
       contentType: 'cards',
       cards: [

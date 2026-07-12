@@ -1,4 +1,5 @@
-<div id="heroCarousel" class="carousel slide" (mouseenter)="onMouseEnter()" (mouseleave)="onMouseLeave()">  <div class="carousel-inner">
+<div id="heroCarousel" class="carousel slide" (mouseenter)="onMouseEnter()" (mouseleave)="onMouseLeave()">
+    <div class="carousel-inner">
     <div class="carousel-item" *ngFor="let slide of slides; let i = index" [class.active]="i === 0">
       <div class="container">
         <div class="text-center mb-4">
@@ -16,8 +17,8 @@
               </div>
             </div>
           </div>
-
           <div class="col-lg-7">
+
             <!-- Cards -->
             <div class="row g-3" *ngIf="slide.contentType === 'cards'">
               <div class="col-sm-6" *ngFor="let card of slide.cards">

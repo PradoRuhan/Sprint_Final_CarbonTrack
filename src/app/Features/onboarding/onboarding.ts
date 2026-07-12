@@ -17,6 +17,14 @@ export class Onboarding {
 
   backgroundImageUrl = 'image/paisagem_fazenda_agro.jpg';
 
+  cancelOnboarding(): void {
+    const confirmed = confirm('Tem certeza que deseja sair? Seus dados de cadastro nesta etapa serão perdidos.');
+    if (confirmed) {
+      this.authService.logout();
+      this.router.navigate(['/login']);
+    }
+  }
+
   currentStep = signal(1);
   totalSteps = 3;
   uploadedFileName = signal<string | null>(null);
