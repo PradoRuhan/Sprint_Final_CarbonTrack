@@ -6,9 +6,9 @@ import { Producer } from '../models/producer.model';
 const MOCK_PRODUCERS: Producer[] = [
   {
     id: 'p1',
-    name: 'Joana Ribeiro',
+    name: 'Ruhan Prado',
     propertyName: 'Fazenda Boa Esperança',
-    location: 'Viçosa, MG · Zona da Mata, MG',
+    location: 'Muritiba, Ba · Recôncavo Baiano, BA',
     cooperativeName: 'Cooperativa Vale Verde',
     biome: 'Mata Atlântica',
     totalAreaHectares: 142,

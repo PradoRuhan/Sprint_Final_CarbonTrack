@@ -1,11 +1,11 @@
-import { Component, ElementRef, HostListener, signal } from '@angular/core';
+import { Component, ElementRef, HostListener, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Router, RouterLink, RouterLinkActive } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../../../core/services/auth.service';
 
 @Component({
   selector: 'app-navbar',
-  imports: [CommonModule, RouterLink, RouterLinkActive],
+  imports: [CommonModule, RouterLink],
   templateUrl: './navbar.html',
   styleUrl: './navbar.css',
 })
@@ -13,9 +13,10 @@ export class Navbar {
   mobileMenuOpen = signal(false);
   userMenuOpen = signal(false);
 
+  private router = inject(Router);
+
   constructor(
     public authService: AuthService,
-    private router: Router,
     private elementRef: ElementRef<HTMLElement>
   ) {}
 
@@ -37,6 +38,16 @@ export class Navbar {
   toggleUserMenu(event: MouseEvent): void {
     event.stopPropagation();
     this.userMenuOpen.update((v) => !v);
+  }
+
+  goHome(event: Event): void {
+    event.preventDefault();
+    this.closeMobileMenu();
+    if (this.router.url === '/') {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    } else {
+      this.router.navigate(['/']).then(() => window.scrollTo({ top: 0, behavior: 'smooth' }));
+    }
   }
 
   logout(): void {

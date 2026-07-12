@@ -106,11 +106,6 @@
   </div>
 </section>
 
-<!-- CARROSSEL -->
-<section id="mercado-carbono">
-  <app-carousel></app-carousel>
-</section>
-
 <!-- SIMULADOR -->
 <section id="simulador" class="py-5 simulator-section">
   <div class="container">
@@ -123,10 +118,8 @@
     </div>
 
     <div class="row g-4 align-items-start">
-      
-<!-- Formulário (coluna estreita) -->
       <div class="col-lg-4">
-        <div class="card simulator-form-card border-0 shadow-lg h-100">
+        <div class="card simulator-form-card border-0 shadow-lg">
           <div class="card-body p-4">
             <div class="d-flex align-items-center gap-3 mb-4">
               <div class="simulator-icon"><i class="bi bi-calculator-fill"></i></div>
@@ -166,10 +159,7 @@
         </div>
       </div>
 
-      <!-- Resultados (coluna larga) -->
       <div class="col-lg-8">
-
-        <!-- Estado vazio -->
         <div *ngIf="!hasSimulated()" class="empty-result-state h-100 d-flex flex-column align-items-center justify-content-center text-center p-5">
           <i class="bi bi-bar-chart-line display-4 text-white-50 mb-3"></i>
           <h5 class="text-white fw-bold mb-2">Sua estimativa aparece aqui</h5>
@@ -178,7 +168,6 @@
           </p>
         </div>
 
-        <!-- Resultado -->
         <div *ngIf="hasSimulated() && simulationResult() as result">
           <div class="row g-3 mb-3">
             <div class="col-md-6">
@@ -199,7 +188,6 @@
             </div>
           </div>
 
-          <!-- Projeção 5 anos -->
           <div class="card border-0 shadow-sm mb-3 p-4">
             <div class="d-flex justify-content-between align-items-start mb-2">
               <div>
@@ -225,7 +213,6 @@
             </div>
           </div>
 
-          <!-- CTA -->
           <div class="cta-bar d-flex flex-column flex-md-row justify-content-between align-items-center gap-3 p-4">
             <div>
               <h6 class="fw-bold text-white mb-1">Ficou interessado?</h6>
@@ -241,30 +228,49 @@
             </div>
           </div>
         </div>
-
       </div>
     </div>
   </div>
 </section>
 
-<!-- ESG -->
-<section id="esg" class="py-5">
-  <div class="container">
-    <h2 class="text-center fw-bold mb-2">Compromisso ESG</h2>
-    <p class="text-center text-secondary mb-5">
-      O CarbonTrack integra práticas ambientais, sociais e de governança em cada projeto.
-    </p>
+<!-- MERCADO DE CARBONO (carrossel informativo) -->
+<section id="mercado-carbono" class="py-5">
+  <app-carousel></app-carousel>
+</section>
 
-    <div class="row g-4">
-      <div class="col-md-4" *ngFor="let card of esgCards">
-        <div class="card h-100 border-0 shadow-sm p-4 esg-card">
-          <div class="d-flex align-items-center gap-3 mb-3">
-            <span class="esg-letter">{{ card.letter }}</span>
-            <span class="fs-2">{{ card.icon }}</span>
-          </div>
-          <h5 class="fw-bold">{{ card.title }}</h5>
-          <p class="text-secondary mb-0">{{ card.description }}</p>
+<!-- ESG -->
+<section id="esg" class="py-5 esg-section">
+  <div class="container">
+    <div class="row g-5 align-items-stretch">
+
+      <div class="col-lg-5">
+        <div class="esg-image-wrap">
+          <img [src]="esgImageUrl" alt="Compromisso ESG do CarbonTrack" class="esg-image" />
         </div>
+      </div>
+
+      <div class="col-lg-7">
+        <span class="section-badge">🌱 ESG</span>
+        <h2 class="fw-bold display-6 mt-3 mb-3">Sustentabilidade que se comprova, não se declara</h2>
+        <p class="text-secondary mb-4" style="max-width: 560px;">
+          O CarbonTrack integra práticas ambientais, sociais e de governança em cada
+          projeto — com dados e processos que sustentam esse compromisso na prática.
+        </p>
+
+        <div class="esg-pillar" *ngFor="let card of esgCards; let last = last" [class.no-border]="last">
+          <span class="esg-pillar-letter">{{ card.letter }}</span>
+          <div>
+            <h5 class="fw-bold mb-2">{{ card.title }}</h5>
+            <p class="text-secondary mb-0">{{ card.description }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="esg-stats-bar mt-5">
+      <div class="esg-stat" *ngFor="let stat of esgStats">
+        <h2 class="fw-bold mb-1">{{ stat.value }}</h2>
+        <small>{{ stat.label }}</small>
       </div>
     </div>
   </div>

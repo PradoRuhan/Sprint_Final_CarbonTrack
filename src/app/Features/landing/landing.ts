@@ -21,6 +21,11 @@ interface EsgCard {
   icon: string;
 }
 
+interface EsgStat {
+  value: string;
+  label: string;
+}
+
 interface Testimonial {
   name: string;
   role: string;
@@ -100,12 +105,34 @@ export class Landing implements OnInit {
     { order: 6, title: 'Comercialização', description: 'Os créditos gerados podem ser destinados à comercialização.', icon: '💹' },
   ];
 
-  esgCards: EsgCard[] = [
-    { letter: 'E', title: 'Ambiental', description: 'Monitoramento de indicadores ambientais, preservação de biomas e uso responsável da terra.', icon: '🌳' },
-    { letter: 'S', title: 'Social', description: 'Inclusão da agricultura familiar e fortalecimento de cooperativas rurais.', icon: '🤲' },
-    { letter: 'G', title: 'Governança', description: 'Gestão documental transparente e processos rastreáveis de certificação.', icon: '📊' },
+esgCards: EsgCard[] = [
+    {
+      letter: 'E',
+      title: 'Ambiental',
+      description: 'Cada projeto é acompanhado por monitoramento contínuo de indicadores ambientais e imagens de satélite, garantindo que a preservação de biomas e o uso responsável da terra sejam verificáveis — não apenas prometidos.',
+      icon: '🌱',
+    },
+    {
+      letter: 'S',
+      title: 'Social',
+      description: 'O modelo de projetos coletivos foi desenhado para incluir a agricultura familiar no mercado de carbono, fortalecendo cooperativas rurais e distribuindo a renda gerada de forma justa entre os produtores.',
+      icon: '🤝',
+    },
+    {
+      letter: 'G',
+      title: 'Governança',
+      description: 'Toda a jornada de certificação é documentada em um único ambiente digital, com processos rastreáveis do cadastro à comercialização — trazendo transparência para produtores, cooperativas e compradores.',
+      icon: '🔐',
+    },
   ];
 
+  esgImageUrl = 'image/agricultor_lavoura_agro.jpg';
+
+  esgStats: EsgStat[] = [
+    { value: '94%', label: 'Cobertura vegetal preservada nas áreas monitoradas' },
+    { value: '78%', label: 'Redução no custo de certificação por produtor' },
+    { value: '100%', label: 'Documentos rastreáveis em tempo real' },
+  ];
   testimonials: Testimonial[] = [
     {
       name: 'Joana Ribeiro',

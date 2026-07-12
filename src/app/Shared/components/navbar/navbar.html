@@ -1,51 +1,53 @@
 <div class="navbar-wrapper">
   <nav class="app-navbar">
-    <a class="navbar-brand" routerLink="/" (click)="closeMobileMenu()">
+    <a class="navbar-brand" href="javascript:void(0)" (click)="goHome($event)">
       <img src="image/carbontrack_icone.jpg" alt="CarbonTrack" class="brand-logo-img" />
-       CarbonTrack
+      CarbonTrack
     </a>
 
-    <ul class="nav-links">
-      <li><a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Início</a></li>
-      <li><a href="#como-funciona">Como Funciona</a></li>
-      <li><a href="#simulador">Simulação</a></li>
-      <li><a href="#mercado-carbono">Mercado de Carbono</a></li>
-      <li><a href="#esg">ESG</a></li>
-      <li><a href="#contato">Contato</a></li>
-    </ul>
+    <div class="nav-menu-panel">
+      <ul class="nav-links">
+        <li><a href="javascript:void(0)" (click)="goHome($event)">Início</a></li>
+        <li><a href="#como-funciona">Como Funciona</a></li>
+        <li><a href="#simulador">Simulação</a></li>
+        <li><a href="#mercado-carbono">Mercado de Carbono</a></li>
+        <li><a href="#esg">ESG</a></li>
+        <li><a href="#contato">Contato</a></li>
+      </ul>
 
-    <div class="nav-actions">
-      @if (!authService.isAuthenticated()) {
-        <a routerLink="/login" class="nav-link-plain">Entrar</a>
-        <a routerLink="/register" class="btn-cta">Começar agora</a>
-      }
+      <div class="nav-actions">
+        @if (!authService.isAuthenticated()) {
+          <a routerLink="/login" class="nav-link-plain">Entrar</a>
+          <a routerLink="/register" class="btn-cta">Começar agora</a>
+        }
 
-      @if (authService.isAuthenticated()) {
-        <div class="user-menu">
-          <button class="user-menu-trigger" (click)="toggleUserMenu($event)">
-            <i class="bi bi-person-circle"></i>
-            <span>{{ authService.currentUser()?.name }}</span>
-            <i class="bi bi-chevron-down small"></i>
-          </button>
-
-          <div class="user-dropdown" *ngIf="userMenuOpen()">
-            @if (authService.currentUser()?.role === 'producer') {
-              <a class="dropdown-link" routerLink="/dashboard/producer">
-                <i class="bi bi-speedometer2"></i> Meu Painel
-              </a>
-            }
-            @if (authService.currentUser()?.role === 'admin') {
-              <a class="dropdown-link" routerLink="/dashboard/admin">
-                <i class="bi bi-speedometer2"></i> Painel Admin
-              </a>
-            }
-            <hr class="dropdown-divider" />
-            <button class="dropdown-link text-danger" (click)="logout()">
-              <i class="bi bi-box-arrow-right"></i> Sair
+        @if (authService.isAuthenticated()) {
+          <div class="user-menu">
+            <button class="user-menu-trigger" (click)="toggleUserMenu($event)">
+              <i class="bi bi-person-circle"></i>
+              <span>{{ authService.currentUser()?.name }}</span>
+              <i class="bi bi-chevron-down small"></i>
             </button>
+
+            <div class="user-dropdown" *ngIf="userMenuOpen()">
+              @if (authService.currentUser()?.role === 'producer') {
+                <a class="dropdown-link" routerLink="/dashboard/producer">
+                  <i class="bi bi-speedometer2"></i> Meu Painel
+                </a>
+              }
+              @if (authService.currentUser()?.role === 'admin') {
+                <a class="dropdown-link" routerLink="/dashboard/admin">
+                  <i class="bi bi-speedometer2"></i> Painel Admin
+                </a>
+              }
+              <hr class="dropdown-divider" />
+              <button class="dropdown-link text-danger" (click)="logout()">
+                <i class="bi bi-box-arrow-right"></i> Sair
+              </button>
+            </div>
           </div>
-        </div>
-      }
+        }
+      </div>
     </div>
 
     <button class="navbar-toggler" type="button" (click)="toggleMobileMenu()">
@@ -53,10 +55,9 @@
     </button>
   </nav>
 
-  <!-- Painel mobile (fora do <nav> para não herdar flex/grid do desktop) -->
   <div class="mobile-panel" *ngIf="mobileMenuOpen()">
     <ul class="nav-links-mobile">
-      <li><a routerLink="/" (click)="closeMobileMenu()">Início</a></li>
+      <li><a href="javascript:void(0)" (click)="goHome($event)">Início</a></li>
       <li><a href="#como-funciona" (click)="closeMobileMenu()">Como Funciona</a></li>
       <li><a href="#simulador" (click)="closeMobileMenu()">Simulação</a></li>
       <li><a href="#mercado-carbono" (click)="closeMobileMenu()">Mercado de Carbono</a></li>

@@ -1,6 +1,8 @@
 .onboarding-section {
   min-height: 100vh;
-  background: #f6f8f7;
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
   padding-top: 2rem;
 }
 

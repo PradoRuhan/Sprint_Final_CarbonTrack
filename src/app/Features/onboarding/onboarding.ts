@@ -15,6 +15,8 @@ export class Onboarding {
   private router = inject(Router);
   private authService = inject(AuthService);
 
+  backgroundImageUrl = 'image/paisagem_fazenda_agro.jpg';
+
   currentStep = signal(1);
   totalSteps = 3;
   uploadedFileName = signal<string | null>(null);

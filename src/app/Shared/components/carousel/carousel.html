@@ -1,45 +1,63 @@
-<div id="heroCarousel" class="carousel slide">
-  
-  <!-- Indicadores -->
-  <div class="carousel-indicators">
+<div id="heroCarousel" class="carousel slide" (mouseenter)="onMouseEnter()" (mouseleave)="onMouseLeave()">  <div class="carousel-inner">
+    <div class="carousel-item" *ngFor="let slide of slides; let i = index" [class.active]="i === 0">
+      <div class="container">
+        <div class="text-center mb-4">
+          <span class="section-badge">🌱 {{ slide.badge }}</span>
+          <h2 class="fw-bold display-6 mt-3 mb-2">{{ slide.title }}</h2>
+          <p class="text-secondary mb-0 mx-auto" style="max-width: 640px;">{{ slide.description }}</p>
+        </div>
+
+        <div class="row g-4 align-items-center" [class.flex-row-reverse]="slide.imagePosition === 'right'">
+          <div class="col-lg-5">
+            <div class="slide-image-wrap">
+              <img [src]="slide.imageUrl" [alt]="slide.title" class="slide-image" />
+              <div class="live-overlay-badge" *ngIf="slide.liveBadge">
+                <span class="live-dot"></span> {{ slide.liveBadge }}
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-7">
+            <!-- Cards -->
+            <div class="row g-3" *ngIf="slide.contentType === 'cards'">
+              <div class="col-sm-6" *ngFor="let card of slide.cards">
+                <div class="info-card">
+                  <div class="info-card-icon"><i class="bi" [ngClass]="card.icon"></i></div>
+                  <h6 class="fw-bold mb-1">{{ card.title }}</h6>
+                  <p class="text-secondary small mb-0">{{ card.description }}</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Checklist -->
+            <ul class="checklist" *ngIf="slide.contentType === 'checklist'">
+              <li *ngFor="let item of slide.checklist">
+                <i class="bi bi-check-circle-fill"></i> {{ item }}
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<button class="carousel-control-prev" type="button" data-bs-target="#heroCarousel" data-bs-slide="prev">
+    <span class="control-btn"><i class="bi bi-chevron-left"></i></span>
+    <span class="visually-hidden">Anterior</span>
+  </button>
+
+  <button class="carousel-control-next" type="button" data-bs-target="#heroCarousel" data-bs-slide="next">
+    <span class="control-btn"><i class="bi bi-chevron-right"></i></span>
+    <span class="visually-hidden">Próximo</span>
+  </button>
+
+  <div class="carousel-indicators-bottom">
     <button
       *ngFor="let slide of slides; let i = index"
       type="button"
       data-bs-target="#heroCarousel"
       [attr.data-bs-slide-to]="i"
       [class.active]="i === 0"
-      [attr.aria-current]="i === 0 ? 'true' : null"
-      [attr.aria-label]="'Slide ' + (i + 1)"
     ></button>
   </div>
-
-  <!-- Slides -->
-  <div class="carousel-inner">
-    <div
-      *ngFor="let slide of slides; let i = index"
-      class="carousel-item"
-      [class.active]="i === 0"
-    >
-      <img [src]="slide.imageUrl" class="d-block w-100 carousel-img" [alt]="slide.title" />
-      <div class="carousel-caption">
-        <h2 class="fw-bold">{{ slide.title }}</h2>
-        <p class="d-none d-md-block">{{ slide.description }}</p>
-        <a [href]="slide.anchor" class="btn btn-success rounded-pill px-4 mt-2">
-          Saiba mais
-        </a>
-      </div>
-    </div>
-  </div>
-
-  <!-- Botão anterior -->
-  <button class="carousel-control-prev" type="button" data-bs-target="#heroCarousel" data-bs-slide="prev">
-    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-    <span class="visually-hidden">Anterior</span>
-  </button>
-
-  <!-- Botão próximo -->
-  <button class="carousel-control-next" type="button" data-bs-target="#heroCarousel" data-bs-slide="next">
-    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-    <span class="visually-hidden">Próximo</span>
-  </button>
 </div>
