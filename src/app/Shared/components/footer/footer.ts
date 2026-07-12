@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
   templateUrl: './footer.html',
   styleUrl: './footer.css',
 })
+
 export class Footer {
   private router = inject(Router);
   currentYear = new Date().getFullYear();
