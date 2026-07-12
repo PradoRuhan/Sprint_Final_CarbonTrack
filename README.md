@@ -1,59 +1,110 @@
-# SprintFinalCarbonTrack
+# 🌱 CarbonTrack
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 22.0.4.
+**Plataforma de Inteligência Climática** que conecta pequenos produtores rurais, cooperativas agrícolas, consultorias ambientais e empresas ao mercado de carbono por meio de projetos coletivos, gestão ESG e monitoramento ambiental.
 
-## Development server
+Projeto final desenvolvido para o programa **Ford Enter** — Trilha de Front-End.
 
-To start a local development server, run:
+🔗 **[Acesse o projeto no ar](https://sprint-final-carbon-track-543crct1d-ruhanprado-2677s-projects.vercel.app/)**
+
+---
+
+## 📋 Sobre o projeto
+
+O CarbonTrack simplifica uma jornada normalmente burocrática — o acesso ao mercado de carbono — utilizando tecnologia para organizar produtores em projetos coletivos, acompanhar processos de certificação, monitorar indicadores ambientais e aproximar projetos sustentáveis de oportunidades de comercialização.
+
+### Principais funcionalidades
+
+- **Landing page institucional** com carrossel automático, simulador de potencial de carbono e seções educativas (ESG, Mercado de Carbono, Cooperativas).
+- **Autenticação simulada** (login/cadastro) com aceite obrigatório dos Termos de Uso e LGPD no cadastro.
+- **Onboarding guiado** em 3 etapas após o cadastro (dados do produtor, propriedade e documentação).
+- **Dashboard do Produtor**: acompanhamento de certificação, linha do tempo, monitoramento satelital (mock) e documentos.
+- **Dashboard Administrativo (Executive)**: KPIs consolidados, gráfico de volume de carbono, distribuição por bioma, fila de validação e busca de produtores em tempo real.
+- **Rotas protegidas** por autenticação e por papel de usuário (produtor/admin).
+- **Design responsivo**, com sidebar retrátil nos dashboards e menu mobile na navegação pública.
+
+---
+
+## 🛠️ Tecnologias utilizadas
+
+- **Angular 22** (standalone components)
+- **TypeScript**
+- **RxJS** (`map`, `debounceTime`, `distinctUntilChanged`, `filter`)
+- **Bootstrap 5** + **Bootstrap Icons**
+- **Reactive Forms** e `ngModel`
+- **SCSS/CSS** com variáveis customizadas para identidade visual
+
+> Este é um projeto **front-end** — não há backend real. Todos os dados (usuários, produtores, indicadores) são simulados via serviços Angular com `Observable`/`BehaviorSubject`, sem persistência real.
+
+---
+
+## 🚀 Como rodar localmente
 
 ```bash
+# Clone o repositório
+git clone https://github.com/PradoRuhan/Sprint_Final_CarbonTrack.git
+
+# Acesse a pasta
+cd Sprint_Final_CarbonTrack
+
+# Instale as dependências
+npm install
+
+# Rode o servidor de desenvolvimento
 ng serve
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+Acesse `http://localhost:4200` no navegador.
 
-## Code scaffolding
+---
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+## 👤 Contas de demonstração
 
-```bash
-ng generate component component-name
-```
+Como não há backend real, use estas credenciais para testar os dois perfis de acesso:
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+| Perfil | E-mail | Senha |
+|---|---|---|
+| Produtor Rural | `produtor@carbontrack.com` | `123456` |
+| Administrador | `admin@carbontrack.com` | `123456` |
 
-```bash
-ng generate --help
-```
+*(Na tela de login, também é possível preencher automaticamente essas credenciais pelos botões de demonstração.)*
 
-## Building
+---
 
-To build the project run:
+## 📁 Estrutura do projeto
 
-```bash
-ng build
-```
+src/app/
+├── core/                  # Guards, models e services (regras de negócio)
+│   ├── guards/
+│   ├── models/
+│   └── services/
+├── shared/                # Componentes reutilizáveis
+│   └── components/
+│       ├── navbar/
+│       ├── footer/
+│       └── carousel/
+└── features/              # Telas da aplicação
+├── landing/
+├── auth/
+│   ├── login/
+│   └── register/
+├── onboarding/
+├── producer-dashboard/
+└── admin-dashboard/
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+---
 
-## Running unit tests
+## ⚖️ LGPD
 
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
+Este é um projeto **acadêmico**, sem fins comerciais. Nenhum dado inserido é processado, armazenado em servidores externos ou compartilhado com terceiros. O cadastro exige aceite explícito dos Termos de Uso e da Política de Privacidade (LGPD), conforme a Lei nº 13.709/2018, mesmo sendo uma simulação.
 
-```bash
-ng test
-```
+---
 
-## Running end-to-end tests
+## 🌐 Deploy
 
-For end-to-end (e2e) testing, run:
+Aplicação hospedada na **Vercel**, com deploy automático a cada push na branch `main`.
 
-```bash
-ng e2e
-```
+---
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+## 📄 Licença
 
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+Projeto acadêmico desenvolvido para fins educacionais no âmbito do programa Ford Enter.
