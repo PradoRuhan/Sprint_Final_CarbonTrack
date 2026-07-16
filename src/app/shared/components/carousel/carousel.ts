@@ -38,7 +38,7 @@ export class Carousel implements AfterViewInit, OnDestroy {
     this.carouselEl = this.elementRef.nativeElement.querySelector('#heroCarousel');
     if (this.carouselEl) {
       this.carouselInstance = new BootstrapCarousel(this.carouselEl, {
-        interval: 5000,
+        interval: 7000,
         ride: 'carousel',
         pause: false, // controlar o pause manualmente via mouseenter/mouseleave
         wrap: true,

@@ -257,13 +257,29 @@
           projeto — com dados e processos que sustentam esse compromisso na prática.
         </p>
 
-        <div class="esg-pillar" *ngFor="let card of esgCards; let last = last" [class.no-border]="last">
-          <span class="esg-pillar-letter">{{ card.letter }}</span>
-          <div>
-            <h5 class="fw-bold mb-2">{{ card.title }}</h5>
-            <p class="text-secondary mb-0">{{ card.description }}</p>
+      <div
+        class="esg-pillar"
+        *ngFor="let card of esgCards; let last = last"
+        [class.no-border]="last"
+        [ngClass]="{
+            'pillar-e': card.letter === 'E',
+            'pillar-s': card.letter === 'S',
+            'pillar-g': card.letter === 'G'
+          }">
+        <span
+          class="esg-pillar-letter"
+          [ngClass]="{
+            'esg-letter-e': card.letter === 'E',
+            'esg-letter-s': card.letter === 'S',
+            'esg-letter-g': card.letter === 'G'
+          }">
+          {{ card.letter }}
+        </span>
+        <div class="esg-pillar-content">
+          <h5 class="fw-bold mb-2">{{ card.title }}</h5>
+          <p class="text-secondary mb-0">{{ card.description }}</p>
           </div>
-        </div>
+        </div>      
       </div>
     </div>
 
