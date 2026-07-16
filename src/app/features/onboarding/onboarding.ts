@@ -29,25 +29,25 @@ export class Onboarding {
   totalSteps = 3;
   uploadedFileName = signal<string | null>(null);
 
-  stepOneForm = this.fb.group({
-    fullName: ['', Validators.required],
-    document: ['', Validators.required],
-    phone: ['', Validators.required],
-    email: ['', [Validators.required, Validators.email]],
+stepOneForm = this.fb.group({
+    fullName: [''],
+    document: [''],
+    phone: [''],
+    email: [''],
   });
 
   stepTwoForm = this.fb.group({
-    propertyName: ['', Validators.required],
-    city: ['', Validators.required],
-    state: ['', Validators.required],
-    totalArea: [null as number | null, [Validators.required, Validators.min(1)]],
-    preservedArea: [null as number | null, [Validators.required, Validators.min(0)]],
+    propertyName: [''],
+    city: [''],
+    state: [''],
+    totalArea: [null as number | null],
+    preservedArea: [null as number | null],
   });
 
   stepThreeForm = this.fb.group({
-    carNumber: ['', Validators.required],
+    carNumber: [''],
   });
-
+  
   get step1() { return this.stepOneForm.controls; }
   get step2() { return this.stepTwoForm.controls; }
   get step3() { return this.stepThreeForm.controls; }

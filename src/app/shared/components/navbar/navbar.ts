@@ -9,17 +9,23 @@ import { AuthService } from '../../../core/services/auth.service';
   templateUrl: './navbar.html',
   styleUrl: './navbar.css',
 })
+
 export class Navbar {
   mobileMenuOpen = signal(false);
   userMenuOpen = signal(false);
+  isHomeActive = signal(true);
 
   private router = inject(Router);
 
   constructor(
     public authService: AuthService,
     private elementRef: ElementRef<HTMLElement>
-  ) {}
-
+  ) {
+    this.isHomeActive.set(this.router.url === '/');
+    this.router.events.subscribe(() => {
+      this.isHomeActive.set(this.router.url === '/');
+    });
+  }
   @HostListener('document:click', ['$event'])
   onDocumentClick(event: MouseEvent): void {
     if (!this.elementRef.nativeElement.contains(event.target as Node)) {

@@ -7,7 +7,7 @@
 
     <div class="nav-menu-panel">
       <ul class="nav-links">
-        <li><a href="javascript:void(0)" (click)="goHome($event)">Início</a></li>
+        <li><a href="javascript:void(0)" (click)="goHome($event)" [class.active]="isHomeActive()">Início</a></li>
         <li><a href="#como-funciona">Como Funciona</a></li>
         <li><a href="#simulador">Simulação</a></li>
         <li><a href="#mercado-carbono">Mercado de Carbono</a></li>
@@ -57,7 +57,7 @@
 
   <div class="mobile-panel" *ngIf="mobileMenuOpen()">
     <ul class="nav-links-mobile">
-      <li><a href="javascript:void(0)" (click)="goHome($event)">Início</a></li>
+      <li><a href="javascript:void(0)" (click)="goHome($event)" [class.active]="isHomeActive()">Início</a></li>
       <li><a href="#como-funciona" (click)="closeMobileMenu()">Como Funciona</a></li>
       <li><a href="#simulador" (click)="closeMobileMenu()">Simulação</a></li>
       <li><a href="#mercado-carbono" (click)="closeMobileMenu()">Mercado de Carbono</a></li>

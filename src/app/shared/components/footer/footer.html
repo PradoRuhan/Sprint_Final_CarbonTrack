@@ -1,20 +1,31 @@
 <footer class="app-footer pt-5 pb-4 mt-auto">
   <div class="container">
-    <div class="row g-4">
-      <div class="col-lg-5">
+    <div class="row gy-5">
+
+      <!-- Marca -->
+      <div class="col-12 col-lg-4">
         <div class="d-flex align-items-center gap-2 mb-3">
-          <img src="image/carbontrack_icone.jpg" alt="CarbonTrack" class="footer-logo-img" />
-          <h5 class="fw-bold mb-0 footer-brand-text">CarbonTrack</h5>
+          <img
+            src="image/carbontrack_icone.jpg"
+            alt="CarbonTrack"
+            class="footer-logo-img"
+          />
+          <h5 class="fw-bold mb-0 footer-brand-text">
+            CarbonTrack
+          </h5>
         </div>
-        <p class="footer-text small mb-0">
+
+        <p class="footer-text">
           Plataforma de inteligência climática que conecta produtores,
-          cooperativas e empresas ao mercado de carbono através de tecnologia e projetos coletivos.
+          cooperativas e empresas ao mercado de carbono através de tecnologia
+          e projetos coletivos.
         </p>
       </div>
 
-      <div class="col-6 col-lg-3 offset-lg-1">
+      <!-- Plataforma -->
+      <div class="col-6 col-lg-2 offset-lg-1">
         <h6 class="fw-bold footer-heading mb-3">Plataforma</h6>
-        <ul class="list-unstyled small footer-links">
+        <ul class="list-unstyled footer-links">
           <li><a href="#mercado-carbono">Mercado de Carbono</a></li>
           <li><a href="#esg">ESG</a></li>
           <li><a href="#como-funciona">Como Funciona</a></li>
@@ -22,21 +33,36 @@
         </ul>
       </div>
 
-      <div class="col-6 col-lg-3">
+      <!-- Empresa -->
+      <div class="col-6 col-lg-2">
         <h6 class="fw-bold footer-heading mb-3">Empresa</h6>
-        <ul class="list-unstyled small footer-links">
-          <li><a href="javascript:void(0)">Sobre</a></li>
-          <li><a href="#mercado-carbono">Cooperativas</a></li>
+        <ul class="list-unstyled footer-links">
+          <li><a href="#">Sobre</a></li>
+          <li><a href="#">Cooperativas</a></li>
           <li><a href="#contato">Contato</a></li>
-          <li><a href="javascript:void(0)">Privacidade</a></li>
+          <li><a href="#">Privacidade</a></li>
         </ul>
+      </div>
+
+      <!-- Certificações -->
+      <div class="col-12 col-lg-3">
+        <div class="footer-cert-block">
+          <h6 class="fw-bold footer-heading mb-3">Certificações</h6>
+          <div class="footer-cert-card">
+            <img
+              src="image/certificadoras.png"
+              alt="Certificações internacionais — UNFCCC e Verified Carbon Standard (Verra)"
+              class="footer-cert-img"
+            />
+          </div>
+        </div>
       </div>
     </div>
 
-    <hr class="footer-divider my-4" />
+    <hr class="footer-divider my-4">
 
-    <p class="text-center footer-text small mb-0">
-      &copy; {{ currentYear }} CarbonTrack. Todos os direitos reservados.
+    <p class="footer-copyright mb-0">
+      © {{ currentYear }} CarbonTrack. Todos os direitos reservados.
     </p>
   </div>
 </footer>
